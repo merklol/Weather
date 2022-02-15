@@ -1,6 +1,6 @@
-package com.maximapps.weatherapp.data.network
+package com.maximapps.maxim_weather.network
 
-import com.maximapps.weatherapp.data.network.models.Response
+import com.maximapps.maxim_weather.network.models.Response
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 
