@@ -17,7 +17,7 @@ class MainViewModel(
     val liveData = _liveData
 
     fun getForecast() {
-        service.getForecast("Moscow")
+        service.getForecast("Tambov")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _liveData.value = MainState.Loading }

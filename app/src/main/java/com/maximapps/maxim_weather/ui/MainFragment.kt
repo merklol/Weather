@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.network.WeatherService
-import com.maximapps.maxim_weather.ui.list.ListAdapter
+import com.maximapps.maxim_weather.ui.list.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class MainFragment : Fragment() {
         MainViewModel.MainViewModelFactory(service)
     }
     private var binding: FragmentMainBinding? = null
-    private val adapter = ListAdapter()
+    private val adapter by lazy { weatherListAdapter(findNavController()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,10 +47,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.weatherList?.adapter = adapter
-        adapter.setOnItemClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_detailsFragment)
-        }
-
         viewModel.liveData.observe(viewLifecycleOwner, ::render)
     }
 
@@ -67,7 +62,8 @@ class MainFragment : Fragment() {
             }
             is MainState.Success -> {
                 binding?.progressIndicator?.isVisible = false
-                adapter.setData(state.response.forecastList)
+                val res = state.response.forecastList.groupBy { it.dtTxt.split(" ")[0] }
+                adapter.setData(res.toList())
             }
             is MainState.Fail -> {
                 binding?.progressIndicator?.isVisible = false
