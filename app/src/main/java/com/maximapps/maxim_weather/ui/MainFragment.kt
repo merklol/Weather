@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.network.WeatherService
 import com.maximapps.maxim_weather.ui.list.ListAdapter
@@ -29,6 +31,11 @@ class MainFragment : Fragment() {
         AndroidSupportInjection.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getForecast()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +48,10 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.weatherList?.adapter = adapter
-        viewModel.getForecast()
+        adapter.setOnItemClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_detailsFragment)
+        }
+
         viewModel.liveData.observe(viewLifecycleOwner, ::render)
     }
 
