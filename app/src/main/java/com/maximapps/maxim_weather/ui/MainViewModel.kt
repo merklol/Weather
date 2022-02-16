@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.maximapps.maxim_weather.network.WeatherService
-import com.maximapps.maxim_weather.network.models.Response
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -14,15 +13,17 @@ class MainViewModel(
     private val service: WeatherService
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
-    private val _liveData = MutableLiveData<Response>()
+    private val _liveData = MutableLiveData<MainState>()
     val liveData = _liveData
 
     fun getForecast() {
-        service.getForecast()
+        service.getForecast("Moscow")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { _liveData.value = MainState.Loading }
             .subscribe(
-                { _liveData.value = it }, { println("Something went wrong...") }
+                { _liveData.value = MainState.Success(it) },
+                { _liveData.value = MainState.Fail("Something went wrong...") }
             )
     }
 

@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.network.WeatherService
 import com.maximapps.maxim_weather.ui.list.ListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class MainFragment: Fragment() {
+class MainFragment : Fragment() {
     @Inject
     lateinit var service: WeatherService
     private val viewModel: MainViewModel by viewModels {
@@ -26,6 +28,7 @@ class MainFragment: Fragment() {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,13 +42,28 @@ class MainFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.weatherList?.adapter = adapter
         viewModel.getForecast()
-        viewModel.liveData.observe(viewLifecycleOwner) {
-            adapter.setData(it.forecastList)
-        }
+        viewModel.liveData.observe(viewLifecycleOwner, ::render)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun render(state: MainState) {
+        when (state) {
+            is MainState.Loading -> {
+                binding?.progressIndicator?.isVisible = true
+            }
+            is MainState.Success -> {
+                binding?.progressIndicator?.isVisible = false
+                adapter.setData(state.response.forecastList)
+            }
+            is MainState.Fail -> {
+                binding?.progressIndicator?.isVisible = false
+                Snackbar.make(requireView(), state.errorMessage, Snackbar.LENGTH_SHORT).show()
+            }
+
+        }
     }
 }
