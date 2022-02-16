@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "maxim_weather"
-include ':app'
+include(":app")
