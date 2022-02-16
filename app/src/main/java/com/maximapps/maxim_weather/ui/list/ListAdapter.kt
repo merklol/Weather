@@ -8,10 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.maximapps.maxim_weather.databinding.WeatherListItemViewBinding
 import com.maximapps.maxim_weather.network.models.Forecast
 
+typealias OnItemClickListener = (() -> Unit)?
+
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
-    //Temp solution
+    //TODO: Change the Forecast model to the ui model
     private val items = mutableListOf<Forecast>()
 
+    private var listener: OnItemClickListener = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
 
     fun setData(data: List<Forecast>) {
         val result = DiffUtil.calculateDiff(ListDiffUtil(items, data))
@@ -21,7 +28,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ListViewHolder(
-        WeatherListItemViewBinding.inflate(
+        listener = listener,
+        binding = WeatherListItemViewBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -34,12 +42,16 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    class ListViewHolder(private val binding: WeatherListItemViewBinding) :
+    class ListViewHolder(
+        private val listener: OnItemClickListener,
+        private val binding: WeatherListItemViewBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        //Temp solution
+        //TODO: Get string values from resources
         @SuppressLint("SetTextI18n")
         fun bind(forecast: Forecast) {
+            binding.root.setOnClickListener { listener?.invoke() }
             binding.date.text = forecast.dtTxt
             binding.rain.text = "Rain: ${forecast.rain?.threeHour?.toString() ?: ""}"
             binding.pressure.text = "Pressure: ${forecast.main.pressure}"
