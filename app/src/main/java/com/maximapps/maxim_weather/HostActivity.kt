@@ -17,7 +17,10 @@ class HostActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
+    override fun onSupportNavigateUp() = navController.navigateUp() || super.onSupportNavigateUp()
+
     private fun getNavHostFragment(): NavHostFragment {
         return supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
     }
+
 }
