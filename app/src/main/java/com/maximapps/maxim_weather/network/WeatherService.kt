@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherService {
-    @GET("forecast?")
+    @GET("forecast?&units=metric")
     fun getForecast(@Query("q") cityName: String): Observable<Response>
 }
