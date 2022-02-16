@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.list
+package com.maximapps.maxim_weather.core
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
@@ -18,30 +18,10 @@ abstract class ListAdapter<T> : RecyclerView.Adapter<ListAdapter.ViewHolder<T>>(
 
 }
 
-fun <T> listAdapter(init: (parent: ViewGroup) -> ListAdapter.ViewHolder<T>) =
-    object : ListAdapter<T>() {
-        @SuppressLint("NotifyDataSetChanged")
-        override fun setData(data: List<T>) {
-            list.clear()
-            list.addAll(data)
-            notifyDataSetChanged()
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = init(parent)
-
-        override fun onBindViewHolder(holder: ViewHolder<T>, position: Int) {
-            holder.bind(list[position])
-        }
-
-        override fun getItemCount() = list.size
-
-    }
-
-
-fun <T> listAdapterWithViewTypes(
+fun <T> listAdapterOf(
     init: (parent: ViewGroup, viewType: Int) -> ListAdapter.ViewHolder<T>,
-    itemViewType: (position: Int) -> Int
-) =
+    itemViewType: ((position: Int) -> Int)? = null
+): ListAdapter<T> =
     object : ListAdapter<T>() {
         @SuppressLint("NotifyDataSetChanged")
         override fun setData(data: List<T>) {
@@ -58,5 +38,6 @@ fun <T> listAdapterWithViewTypes(
 
         override fun getItemCount() = list.size
 
-        override fun getItemViewType(position: Int) = itemViewType(position)
+        override fun getItemViewType(position: Int) =
+            itemViewType?.invoke(position) ?: super.getItemViewType(position)
     }
