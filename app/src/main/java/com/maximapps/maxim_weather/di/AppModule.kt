@@ -1,9 +1,11 @@
 package com.maximapps.maxim_weather.di
 
+import com.maximapps.maxim_weather.BuildConfig
 import com.maximapps.maxim_weather.network.WeatherService
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,19 +17,37 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return interceptor
+    fun providesAuthorizationInterceptor(): Interceptor = object : Interceptor {
+        override fun intercept(chain: Interceptor.Chain) = chain.proceed(
+            chain.request().newBuilder()
+                .addHeader(name = "x-api-key", value = BuildConfig.OpenWeatherApiKey)
+                .build()
+        )
     }
 
     @Provides
     @Singleton
-    fun providesRetrofit(interceptor: HttpLoggingInterceptor): Retrofit = Retrofit.Builder()
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().also {
+        it.level = HttpLoggingInterceptor.Level.BODY
+    }
+
+
+    @Provides
+    @Singleton
+    fun providesOkHttpClient(
+        interceptor: Interceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ) = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(interceptor).build()
+
+    @Provides
+    @Singleton
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.openweathermap.org/data/2.5/")
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().addInterceptor(interceptor).build())
+        .client(okHttpClient)
         .build()
 
     @Provides
