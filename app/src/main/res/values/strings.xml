@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">maxim_weather</string>
+    <string name="today_date">"Today, %s"</string>
+    <string name="today_details">"%s, feels like %d\u00B0"</string>
+    <string name="temperature">"%d\u00B0"</string>
+    <string name="weather_icon">Weather Icon</string>
 </resources>
