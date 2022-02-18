@@ -1,11 +1,11 @@
 package com.maximapps.maxim_weather.ui.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.maximapps.maxim_weather.network.models.Forecast
+import com.maximapps.maxim_weather.data.network.models.ForecastEntity
 
 class ListDiffUtil(
     //TODO: Change the Forecast model to the ui model
-    private val old: List<Forecast>, private val new: List<Forecast>
+    private val old: List<ForecastEntity>, private val new: List<ForecastEntity>
 
 ): DiffUtil.Callback() {
     override fun getOldListSize() = old.size
