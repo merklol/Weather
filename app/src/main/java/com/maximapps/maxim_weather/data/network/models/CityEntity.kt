@@ -1,13 +1,13 @@
-package com.maximapps.maxim_weather.network.models
+package com.maximapps.maxim_weather.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
 
-data class City(
+data class CityEntity(
     val id: Int,
     val name: String,
     @SerializedName("coord")
-    val coordinates: Coordinates,
+    val coordinates: CoordinatesEntity,
     val country: String,
     val timezone: Int,
     val sunrise: Int,

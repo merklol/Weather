@@ -1,8 +1,8 @@
-package com.maximapps.maxim_weather.network.models
+package com.maximapps.maxim_weather.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Main(
+data class MainEntity(
     val temp: Double,
     @SerializedName("feels_like")
     val feelsLike: Double,
