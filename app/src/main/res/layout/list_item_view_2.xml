@@ -5,17 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="24sp"
     app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="280dp"
         android:background="@drawable/today_card_background_color"
         android:orientation="vertical"
         android:padding="12dp">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="Today, 12 August, Mon" />
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/weather_icon"
+            tools:src="@drawable/thunder"/>
 
         <TextView
             android:id="@+id/temperature"
@@ -24,7 +41,17 @@
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:textSize="48sp"
-            tools:text="15:00" />
+            android:textStyle="bold"
+            tools:text="3\u00B0" />
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="Clear, feels like 32" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

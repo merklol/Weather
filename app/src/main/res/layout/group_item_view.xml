@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="0dp"
+    app:cardBackgroundColor="#EAECEF"
     app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="#EAECEF">
+    app:cardElevation="0dp">
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="73dp"
-        android:minHeight="114dp"
-        android:padding="12dp"
-        android:orientation="vertical">
+        android:layout_height="114dp"
+        android:orientation="vertical"
+        android:padding="12dp">
 
         <TextView
             android:id="@+id/time"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="15:00"/>
+            android:textSize="16sp"
+            tools:text="15:00" />
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/weather_icon"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/few_clouds" />
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:layout_gravity="center"
             android:textColor="#2A2D33"
-            tools:text="30"/>
+            android:textSize="16sp"
+            tools:text="30\u00B0" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
