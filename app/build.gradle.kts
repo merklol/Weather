@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -58,6 +60,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+
+    //ViewBindingPropertyDelegate
+    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
