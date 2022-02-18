@@ -1,30 +1,25 @@
 package com.maximapps.maxim_weather.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.maximapps.maxim_weather.R
+import com.maximapps.maxim_weather.core.BaseFragment
 import com.maximapps.maxim_weather.databinding.FragmentDetailsBinding
+import com.maximapps.maxim_weather.ext.toFormattedDate
 
-class DetailsFragment: Fragment() {
-    private var binding: FragmentDetailsBinding? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+class DetailsFragment : BaseFragment(R.layout.fragment_details) {
+    private val binding by viewBinding(FragmentDetailsBinding::bind)
+    private val args: DetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        with(args.forecast) {
+            binding.date.text = date.toFormattedDate()
+            binding.weatherIcon.setImageResource(iconResId)
+            binding.temperature.text = getString(R.string.temperature, temperature)
+            binding.details.text = getString(R.string.today_details, weather, feelsLike)
+        }
     }
 }
