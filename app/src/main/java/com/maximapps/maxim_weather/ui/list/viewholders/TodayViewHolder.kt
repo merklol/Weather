@@ -2,14 +2,16 @@ package com.maximapps.maxim_weather.ui.list.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.ListAdapter
 import com.maximapps.maxim_weather.databinding.ListItemView2Binding
-import com.maximapps.maxim_weather.network.models.Forecast
-import kotlin.math.roundToInt
+import com.maximapps.maxim_weather.domain.models.Forecast
+import com.maximapps.maxim_weather.ext.getString
+import com.maximapps.maxim_weather.ext.toFormattedDate
 
 class TodayViewHolder(
     private val binding: ListItemView2Binding,
-) : ListAdapter.ViewHolder<Pair<String, List<Forecast>>>(binding) {
+) : ListAdapter.ViewHolder<Forecast>(binding) {
 
     companion object {
         operator fun invoke(parent: ViewGroup) =
@@ -22,7 +24,10 @@ class TodayViewHolder(
             )
     }
 
-    override fun bind(item: Pair<String, List<Forecast>>) {
-        binding.temperature.text = item.second[0].main.temp.roundToInt().toString()
+    override fun bind(item: Forecast) {
+        binding.weatherIcon.setImageResource(item.iconResId)
+        binding.temperature.text = getString(R.string.temperature, item.temperature)
+        binding.date.text = getString(R.string.today_date, item.date.toFormattedDate())
+        binding.details.text = getString(R.string.today_details, item.weather, item.feelsLike)
     }
 }

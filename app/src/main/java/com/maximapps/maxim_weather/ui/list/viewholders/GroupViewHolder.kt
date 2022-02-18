@@ -2,16 +2,15 @@ package com.maximapps.maxim_weather.ui.list.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.ListAdapter
 import com.maximapps.maxim_weather.databinding.GroupItemViewBinding
-import com.maximapps.maxim_weather.network.models.Forecast
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import kotlin.math.roundToInt
+import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.ext.getString
+import com.maximapps.maxim_weather.ext.toFormattedTime
 
 class GroupViewHolder(private val binding: GroupItemViewBinding) :
-    ListAdapter.ViewHolder<Forecast>(binding) {
+    ListAdapter.ViewHolder<DetailedForecast>(binding) {
 
     companion object {
         operator fun invoke(parent: ViewGroup) =
@@ -24,9 +23,9 @@ class GroupViewHolder(private val binding: GroupItemViewBinding) :
             )
     }
 
-    override fun bind(item: Forecast) {
-        val formatter = SimpleDateFormat("hh:mm", Locale.getDefault())
-        binding.time.text = formatter.format(Date(item.dt * 1000))
-        binding.temperature.text = item.main.temp.roundToInt().toString()
+    override fun bind(item: DetailedForecast) {
+        binding.time.text = item.date.toFormattedTime()
+        binding.weatherIcon.setImageResource(item.iconResId)
+        binding.temperature.text = getString(R.string.temperature, item.temperature)
     }
 }
