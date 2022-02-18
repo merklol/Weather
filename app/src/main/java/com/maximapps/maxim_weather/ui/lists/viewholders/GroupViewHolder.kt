@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.list.viewholders
+package com.maximapps.maxim_weather.ui.lists.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

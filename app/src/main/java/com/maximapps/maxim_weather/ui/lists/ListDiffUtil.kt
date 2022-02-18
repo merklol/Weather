@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.list
+package com.maximapps.maxim_weather.ui.lists
 
 import androidx.recyclerview.widget.DiffUtil
 import com.maximapps.maxim_weather.data.network.models.ForecastEntity

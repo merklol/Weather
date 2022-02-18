@@ -1,9 +1,9 @@
-package com.maximapps.maxim_weather.ui.list
+package com.maximapps.maxim_weather.ui.lists
 
 import com.maximapps.maxim_weather.core.listAdapterOf
 import com.maximapps.maxim_weather.domain.models.Forecast
-import com.maximapps.maxim_weather.ui.list.viewholders.ListViewHolder
-import com.maximapps.maxim_weather.ui.list.viewholders.TodayViewHolder
+import com.maximapps.maxim_weather.ui.lists.viewholders.ListViewHolder
+import com.maximapps.maxim_weather.ui.lists.viewholders.TodayViewHolder
 
 fun weatherListAdapter(onItemClick: (forecast: Forecast) -> Unit) = listAdapterOf(
     init = { viewGroup, viewType ->
