@@ -1,23 +1,20 @@
 package com.maximapps.maxim_weather
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.maximapps.maxim_weather.databinding.ActivityHostBinding
 
-class HostActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
+class HostActivity : AppCompatActivity(R.layout.activity_host) {
+    private val binding by viewBinding(ActivityHostBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(ActivityHostBinding.inflate(layoutInflater).root)
-        navController = getNavHostFragment().navController
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.setupWithNavController(getNavHostFragment().navController)
     }
-
-    override fun onSupportNavigateUp() = navController.navigateUp() || super.onSupportNavigateUp()
 
     private fun getNavHostFragment(): NavHostFragment {
         return supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
