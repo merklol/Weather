@@ -1,5 +1,6 @@
 package com.maximapps.maxim_weather.di
 
+import com.maximapps.maxim_weather.ui.DetailsFragment
 import com.maximapps.maxim_weather.ui.MainFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,4 +10,7 @@ import dagger.android.ContributesAndroidInjector
 interface FragmentModule {
     @ContributesAndroidInjector
     fun contributeMainFragment(): MainFragment
+
+    @ContributesAndroidInjector
+    fun contributeDetailsFragment(): DetailsFragment
 }

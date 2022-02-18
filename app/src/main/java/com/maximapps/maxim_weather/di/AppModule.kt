@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.di
 
 import com.maximapps.maxim_weather.BuildConfig
-import com.maximapps.maxim_weather.network.WeatherService
+import com.maximapps.maxim_weather.data.network.WeatherService
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -14,7 +14,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
-
     @Provides
     @Singleton
     fun providesAuthorizationInterceptor(): Interceptor = object : Interceptor {
@@ -30,7 +29,6 @@ class AppModule {
     fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().also {
         it.level = HttpLoggingInterceptor.Level.BODY
     }
-
 
     @Provides
     @Singleton
