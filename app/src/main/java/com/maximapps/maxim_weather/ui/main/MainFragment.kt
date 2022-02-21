@@ -3,34 +3,27 @@ package com.maximapps.maxim_weather.ui.main
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.core.BaseFragment
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactory
+import com.maximapps.maxim_weather.domain.models.WeatherData
 import com.maximapps.maxim_weather.ui.lists.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class MainFragment : BaseFragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) {
     @Inject
     lateinit var factory: ViewModelFactory
-    private val viewModel: MainViewModel by viewModels { factory }
+    private val viewModel: MainViewModel by activityViewModels { factory }
     private val binding by viewBinding(FragmentMainBinding::bind)
-
-    private val adapter by lazy {
-        weatherListAdapter(onItemClick = {
-            findNavController().navigate(
-                com.maximapps.maxim_weather.ui.MainFragmentDirections.actionMainFragmentToDetailsFragment(
-                    it
-                )
-            )
-        })
-    }
+    private val adapter = weatherListAdapter(onItemClick = { })
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -39,30 +32,38 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getForecast()
+        viewModel.getForecast("Shanghai")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.weatherList.adapter = adapter
-        viewModel.liveData.observe(viewLifecycleOwner, ::render)
+        binding.toolbar.searchBtn.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToMainDialog())
+        }
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is MainState.Loading -> showProgressIndicator()
+                is MainState.Success -> showWeather(it.data)
+                is MainState.Fail -> showError(it.resId)
+            }
+        }
     }
 
-    private fun render(state: MainState) {
-        when (state) {
-            is MainState.Loading -> {
-                binding.progressIndicator.isVisible = true
-            }
-            is MainState.Success -> {
-                binding.progressIndicator.isVisible = false
-                adapter.setData(state.response.forecastList)
-                setToolbarTitle(state.response.cityName)
-            }
-            is MainState.Fail -> {
-                binding.progressIndicator.isVisible = false
-                Snackbar.make(requireView(), state.errorMessage, Snackbar.LENGTH_SHORT).show()
-            }
+    private fun showProgressIndicator() {
+        binding.weatherList.isVisible = false
+        binding.progressIndicator.isVisible = true
+    }
 
-        }
+    private fun showWeather(weatherData: WeatherData) {
+        binding.weatherList.isVisible = true
+        binding.progressIndicator.isVisible = false
+        binding.toolbar.title.text = weatherData.cityName
+        adapter.setData(weatherData.detailedForecastList)
+    }
+
+    private fun showError(@StringRes resId: Int) {
+        binding.progressIndicator.isVisible = false
+        Snackbar.make(requireView(), resId, Snackbar.LENGTH_SHORT).show()
     }
 }
