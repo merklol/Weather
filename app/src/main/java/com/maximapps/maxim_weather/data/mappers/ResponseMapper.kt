@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
 /**
  * Map a [Response] to a [WeatherData] instance from the Domain layer.
  */
-class WeatherDataMapper @Inject constructor(
+class ResponseMapper @Inject constructor(
     private val iconMapper: IconMapper,
     private val forecastMapper: ForecastMapper
 ) : Mapper<Response, WeatherData> {
