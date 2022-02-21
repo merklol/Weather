@@ -32,7 +32,7 @@
             android:layout_margin="4dp"
             android:contentDescription="@string/weather_icon"
             android:scaleType="fitCenter"
-            tools:src="@drawable/few_clouds" />
+            tools:src="@mipmap/few_clouds" />
 
         <TextView
             android:id="@+id/temperature"
