@@ -2,7 +2,7 @@ package com.maximapps.maxim_weather.domain.models
 
 import java.util.Date
 
-data class DetailedForecast(
+data class Forecast(
     val date: Date,
     val temperature: Int,
     val minTemperature: Int,

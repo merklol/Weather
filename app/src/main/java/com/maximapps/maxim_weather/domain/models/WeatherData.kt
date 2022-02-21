@@ -1,3 +1,3 @@
 package com.maximapps.maxim_weather.domain.models
 
-data class CityWeather(val cityName: String, val forecastList: List<Forecast>)
+data class WeatherData(val cityName: String, val detailedForecastList: List<DetailedForecast>)
