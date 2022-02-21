@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">maxim_weather</string>
-    <string name="today_date">"Today, %s"</string>
-    <string name="today_details">"%s, feels like %d\u00B0"</string>
+    <string name="current_date">"Today, %s"</string>
+    <string name="forecast_details">"%1$s, feels like %2$d\u00B0"</string>
     <string name="temperature">"%d\u00B0"</string>
     <string name="weather_icon">Weather Icon</string>
+    <string name="search_city">Search city</string>
+    <string name="switch_theme">Switch theme</string>
+    <string name="find_location">Find location</string>
+    <string name="error_message">Something went wrong</string>
+    <string name="main_dialog_edit_text_hint">Enter city name</string>
+    <string name="main_dialog_cancel_btn_text">Cancel</string>
+    <string name="main_dialog_add_btn_text">Add</string>
 </resources>
