@@ -1,5 +1,10 @@
 package com.maximapps.maxim_weather.data.network
 
+/**
+ * Weather condition codes
+ *
+ * @see <a href="https://openweathermap.org/weather-conditions">Weather Conditions</a>
+ */
 object IconTypes {
     object Day {
         const val ClearSky = "01d"
