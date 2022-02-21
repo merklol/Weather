@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Base class for a RecyclerView adapter.
+ */
 abstract class ListAdapter<T> : RecyclerView.Adapter<ListAdapter.ViewHolder<T>>() {
     protected val list = mutableListOf<T>()
 
@@ -17,6 +20,9 @@ abstract class ListAdapter<T> : RecyclerView.Adapter<ListAdapter.ViewHolder<T>>(
 
 }
 
+/**
+ * Returns a new ListAdapter with the given ViewHolder.
+ */
 fun <T> listAdapterOf(
     init: (parent: ViewGroup, viewType: Int) -> ListAdapter.ViewHolder<T>,
     itemViewType: ((position: Int) -> Int)? = null
