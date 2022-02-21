@@ -5,13 +5,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="#EAECEF"
+    app:cardBackgroundColor="@color/grey_50"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="114dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="12dp">
 
@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/shuttle_grey_500"
             android:textSize="16sp"
             tools:text="15:00" />
 
@@ -38,8 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="#2A2D33"
+            android:textColor="@color/shuttle_grey_900"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="30\u00B0" />
 
     </LinearLayout>

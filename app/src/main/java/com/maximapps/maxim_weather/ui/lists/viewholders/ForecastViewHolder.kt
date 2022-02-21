@@ -4,18 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.ListAdapter
-import com.maximapps.maxim_weather.databinding.GroupItemViewBinding
+import com.maximapps.maxim_weather.databinding.ListItemViewForecastBinding
 import com.maximapps.maxim_weather.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.ext.getString
 import com.maximapps.maxim_weather.ext.toFormattedTime
 
-class GroupViewHolder(private val binding: GroupItemViewBinding) :
+/**
+ * View holder for detailed forecast card list item view.
+ */
+class DetailedForecastViewHolder(private val binding: ListItemViewForecastBinding) :
     ListAdapter.ViewHolder<DetailedForecast>(binding) {
 
     companion object {
         operator fun invoke(parent: ViewGroup) =
-            GroupViewHolder(
-                GroupItemViewBinding.inflate(
+            DetailedForecastViewHolder(
+                ListItemViewForecastBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
