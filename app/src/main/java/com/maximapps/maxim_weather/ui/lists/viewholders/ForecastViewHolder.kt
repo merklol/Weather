@@ -5,19 +5,19 @@ import android.view.ViewGroup
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.ListAdapter
 import com.maximapps.maxim_weather.databinding.ListItemViewForecastBinding
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.domain.models.Forecast
 import com.maximapps.maxim_weather.ext.getString
 import com.maximapps.maxim_weather.ext.toFormattedTime
 
 /**
- * View holder for detailed forecast card list item view.
+ * View holder for forecast card list item view.
  */
-class DetailedForecastViewHolder(private val binding: ListItemViewForecastBinding) :
-    ListAdapter.ViewHolder<DetailedForecast>(binding) {
+class ForecastViewHolder(private val binding: ListItemViewForecastBinding) :
+    ListAdapter.ViewHolder<Forecast>(binding) {
 
     companion object {
         operator fun invoke(parent: ViewGroup) =
-            DetailedForecastViewHolder(
+            ForecastViewHolder(
                 ListItemViewForecastBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -26,7 +26,7 @@ class DetailedForecastViewHolder(private val binding: ListItemViewForecastBindin
             )
     }
 
-    override fun bind(item: DetailedForecast) {
+    override fun bind(item: Forecast) {
         binding.time.text = item.date.toFormattedTime()
         binding.weatherIcon.setImageResource(item.iconResId)
         binding.temperature.text = getString(R.string.temperature, item.temperature)

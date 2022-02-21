@@ -6,22 +6,22 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.ListAdapter
 import com.maximapps.maxim_weather.core.listAdapterOf
 import com.maximapps.maxim_weather.databinding.ListItemViewDetailedForecastBinding
-import com.maximapps.maxim_weather.domain.models.Forecast
+import com.maximapps.maxim_weather.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.ext.getString
 import com.maximapps.maxim_weather.ext.toFormattedDate
 
 /**
- * View holder for forecast card list item view.
+ * View holder for detailed forecast card list item view.
  */
-class ForecastViewHolder(
+class DetailedForecastViewHolder(
     private val binding: ListItemViewDetailedForecastBinding,
-    private val onItemClick: (forecast: Forecast) -> Unit
-) : ListAdapter.ViewHolder<Forecast>(binding) {
-    private val adapter = listAdapterOf({ viewGroup, _ -> DetailedForecastViewHolder(viewGroup) })
+    private val onItemClick: (forecast: DetailedForecast) -> Unit
+) : ListAdapter.ViewHolder<DetailedForecast>(binding) {
+    private val adapter = listAdapterOf({ viewGroup, _ -> ForecastViewHolder(viewGroup) })
 
     companion object {
-        operator fun invoke(parent: ViewGroup, onItemClick: (forecast: Forecast) -> Unit) =
-            ForecastViewHolder(
+        operator fun invoke(parent: ViewGroup, onItemClick: (forecast: DetailedForecast) -> Unit) =
+            DetailedForecastViewHolder(
                 ListItemViewDetailedForecastBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -30,10 +30,10 @@ class ForecastViewHolder(
             )
     }
 
-    override fun bind(item: Forecast) {
+    override fun bind(item: DetailedForecast) {
         binding.date.text = item.date.toFormattedDate()
         binding.root.setOnClickListener { onItemClick(item) }
-        binding.groupView.adapter = adapter.also { it.setData(item.detailedForecast) }
+        binding.detailList.adapter = adapter.also { it.setData(item.details) }
         binding.minTemperature.text = getString(R.string.temperature, item.temperatureMin)
         binding.maxTemperature.text = getString(R.string.temperature, item.temperatureMax)
     }
