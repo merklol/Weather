@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.maximapps.maxim_weather.ui.MainFragment"
-        android:label="MainFragment" >
+        android:name="com.maximapps.maxim_weather.ui.main.MainFragment">
         <action
-            android:id="@+id/action_mainFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/action_mainFragment_to_mainDialog"
+            app:destination="@id/mainDialog" />
     </fragment>
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.maximapps.maxim_weather.ui.DetailsFragment"
-        android:label="DetailsFragment" />
+
+    <dialog
+        android:id="@+id/mainDialog"
+        android:name="com.maximapps.maxim_weather.ui.main.MainDialogFragment"
+        android:label="Add city" />
 </navigation>
