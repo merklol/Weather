@@ -23,8 +23,13 @@ class MainViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _liveData.value = MainState.Loading }
                 .subscribe(
-                    { _liveData.value = MainState.Success(it) },
-                    { _liveData.value = MainState.Fail(R.string.error_message) }
+                    { response ->
+                        _liveData.value =
+                            MainState.Loaded(response.cityName, response.detailedForecast)
+                    },
+                    {
+                        _liveData.value = MainState.Error(R.string.error_message)
+                    }
                 )
         )
     }
