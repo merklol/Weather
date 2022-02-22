@@ -31,6 +31,6 @@ class TodayForecastViewHolder(
         binding.weatherIcon.setImageResource(item.iconResId)
         binding.temperature.text = getString(R.string.temperature, item.temperature)
         binding.date.text = getString(R.string.current_date, item.date.toFormattedDate())
-        binding.details.text = getString(R.string.forecast_details, item.weather, item.feelsLike)
+        binding.details.text = getString(R.string.forecast_details, item.weatherCondition, item.feelsLike)
     }
 }
