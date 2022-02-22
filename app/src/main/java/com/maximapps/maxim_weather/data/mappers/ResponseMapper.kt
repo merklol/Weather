@@ -1,10 +1,12 @@
 package com.maximapps.maxim_weather.data.mappers
 
+import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.core.Mapper
 import com.maximapps.maxim_weather.data.network.models.Response
 import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.domain.models.Undefined
 import com.maximapps.maxim_weather.domain.models.WeatherData
-import java.util.Calendar
+import com.maximapps.maxim_weather.ext.capitalized
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -20,8 +22,9 @@ class ResponseMapper @Inject constructor(
 
     override fun map(input: Response) = WeatherData(
         cityName = input.city.name,
-        detailedForecastList = groupDetailedForecastByDate(input).map { item ->
+        detailedForecast = input.groupByDate().map { item ->
             with(item.value.last()) {
+                val weatherData = if (weather.isNotEmpty()) weather.last() else null
                 DetailedForecast(
                     date = Date(TimeUnit.SECONDS.toMillis(dt)),
                     temperature = main.temp.roundToInt(),
@@ -29,19 +32,11 @@ class ResponseMapper @Inject constructor(
                     temperatureMax = item.value.maxOf { it.main.tempMax }.roundToInt(),
                     wind = wind.speed.roundToInt(),
                     feelsLike = main.feelsLike.roundToInt(),
-                    weather = weather.first().main,
-                    iconResId = iconMapper.map(weather.first().icon),
+                    weatherCondition = weatherData?.description?.capitalized ?: Undefined,
+                    iconResId = weatherData?.let { iconMapper.map(it.icon) } ?: R.mipmap.few_clouds,
                     details = item.value.map { forecast -> forecastMapper.map(forecast) }
                 )
             }
         }
     )
-
-    private fun groupDetailedForecastByDate(response: Response) = response.forecastList
-        .groupBy {
-            with(Calendar.getInstance()) {
-                time = Date(TimeUnit.SECONDS.toMillis(it.dt))
-                get(Calendar.DATE)
-            }
-        }
 }
