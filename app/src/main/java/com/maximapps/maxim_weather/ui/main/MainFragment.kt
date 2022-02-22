@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactory
-import com.maximapps.maxim_weather.domain.models.WeatherData
+import com.maximapps.maxim_weather.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.ui.lists.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -44,8 +44,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewModel.liveData.observe(viewLifecycleOwner) {
             when (it) {
                 is MainState.Loading -> showProgressIndicator()
-                is MainState.Success -> showWeather(it.data)
-                is MainState.Fail -> showError(it.resId)
+                is MainState.Loaded -> showWeather(it.cityName, it.detailedForecast)
+                is MainState.Error -> showError(it.resId)
             }
         }
     }
@@ -55,11 +55,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.progressIndicator.isVisible = true
     }
 
-    private fun showWeather(weatherData: WeatherData) {
+    private fun showWeather(cityName: String, detailedForecast: List<DetailedForecast>) {
         binding.weatherList.isVisible = true
         binding.progressIndicator.isVisible = false
-        binding.toolbar.title.text = weatherData.cityName
-        adapter.setData(weatherData.detailedForecastList)
+        binding.toolbar.title.text = cityName
+        adapter.setData(detailedForecast)
     }
 
     private fun showError(@StringRes resId: Int) {
