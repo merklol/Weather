@@ -1,6 +1,7 @@
 package com.maximapps.maxim_weather.data.mappers
 
 import com.maximapps.maxim_weather.core.Mapper
+import com.maximapps.maxim_weather.data.network.IconTypes
 import com.maximapps.maxim_weather.data.network.models.ForecastEntity
 import com.maximapps.maxim_weather.domain.models.Forecast
 import java.util.Date
@@ -20,7 +21,7 @@ class ForecastMapper @Inject constructor(
             main.temp.roundToInt(),
             main.tempMin.roundToInt(),
             main.tempMax.roundToInt(),
-            mapper.map(weather.first().icon)
+            mapper.map(if (weather.isNotEmpty()) weather.first().icon else IconTypes.Day.FewClouds)
         )
     }
 }
