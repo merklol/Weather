@@ -79,12 +79,16 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.0.0")
     implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
 
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
