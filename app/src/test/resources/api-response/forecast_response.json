@@ -1,0 +1,56 @@
+{
+  "cod": "200",
+  "message": 0,
+  "cnt": 40,
+  "list": [
+    {
+      "dt": 1645920000,
+      "main": {
+        "temp": -1.24,
+        "feels_like": -3.35,
+        "temp_min": -1.24,
+        "temp_max": -1.24,
+        "pressure": 1032,
+        "sea_level": 1032,
+        "grnd_level": 1013,
+        "humidity": 94,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 804,
+          "main": "Clouds",
+          "description": "overcast clouds",
+          "icon": "04n"
+        }
+      ],
+      "clouds": {
+        "all": 93
+      },
+      "wind": {
+        "speed": 1.61,
+        "deg": 311,
+        "gust": 4.95
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "n"
+      },
+      "dt_txt": "2022-02-27 00:00:00"
+    }
+  ],
+  "city": {
+    "id": 524901,
+    "name": "Moscow",
+    "coord": {
+      "lat": 55.7522,
+      "lon": 37.6156
+    },
+    "country": "RU",
+    "population": 1000000,
+    "timezone": 10800,
+    "sunrise": 1645504719,
+    "sunset": 1645541269
+  }
+}

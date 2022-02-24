@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.maximapps.maxim_weather.ui.main.MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_mainDialog"
+            app:destination="@id/mainDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/mainDialog"
+        android:name="com.maximapps.maxim_weather.ui.main.MainDialogFragment"
+        android:label="Add city" />
+</navigation>

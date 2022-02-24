@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_500">#409BF6</color>
+    <color name="blue_700">#006dc3</color>
+    <color name="blue_400">#44A2FF</color>
+    <color name="light_blue_400">#5AADFF</color>
+    <color name="light_blue_500">#3599FF</color>
+    <color name="cyan_blue_50">#F3F5F8</color>
+    <color name="cyan_blue_300">#D9DCE2</color>
+    <color name="grey_50">#EAECEF</color>
+    <color name="blue_grey_50">#D9E0EA</color>
+    <color name="shuttle_grey_50">#E7ECF3</color>
+    <color name="shuttle_grey_500">#8F96A1</color>
+    <color name="shuttle_grey_600">#707782</color>
+    <color name="shuttle_grey_900">#2A2D33</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
