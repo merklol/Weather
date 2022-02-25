@@ -1,6 +1,5 @@
 package com.maximapps.maxim_weather.mainScreen.data
 
-import com.maximapps.maxim_weather.mainScreen.data.mappers.ResponseMapper
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData

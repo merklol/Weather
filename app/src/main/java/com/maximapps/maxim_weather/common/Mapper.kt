@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.common.mappers
+package com.maximapps.maxim_weather.common
 
 /**
  * Interface for model mappers.
