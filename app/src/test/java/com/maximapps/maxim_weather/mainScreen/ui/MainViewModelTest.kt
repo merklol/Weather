@@ -1,12 +1,10 @@
-package com.maximapps.maxim_weather.ui.main
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.ui.MainState
-import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
@@ -28,10 +26,13 @@ import org.mockito.ArgumentMatchers
 class MainViewModelTest {
     @get:Rule
     var testScheduler = RxImmediateSchedulerRule()
+
     @get:Rule
     var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+
     @MockK
     lateinit var liveDataObserver: Observer<MainState>
+
     @MockK
     lateinit var repository: WeatherRepository
 
@@ -61,12 +62,17 @@ class MainViewModelTest {
         viewModel.getForecast(ArgumentMatchers.anyString())
 
         MatcherAssert.assertThat(slots[0], CoreMatchers.`is`(MainState.Loading))
-        MatcherAssert.assertThat(slots[1], CoreMatchers.`is`(MainState.Loaded(data.cityName, data.detailedForecast)))
+        MatcherAssert.assertThat(
+            slots[1],
+            CoreMatchers.`is`(MainState.Loaded(data.cityName, data.detailedForecast))
+        )
     }
 
     @Test
     fun `when getForecast return bad response the state switch to Loading and then to Fail`() {
-        every { repository.getForecast(ArgumentMatchers.anyString()) } returns Single.error(Exception())
+        every { repository.getForecast(ArgumentMatchers.anyString()) } returns Single.error(
+            Exception()
+        )
 
         viewModel.liveData.observeForever(liveDataObserver)
         viewModel.getForecast(ArgumentMatchers.anyString())

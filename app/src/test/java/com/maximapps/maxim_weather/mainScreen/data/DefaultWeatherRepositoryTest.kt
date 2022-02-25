@@ -1,10 +1,6 @@
-package com.maximapps.maxim_weather.data
+package com.maximapps.maxim_weather.mainScreen.data
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.mainScreen.data.DefaultWeatherRepository
-import com.maximapps.maxim_weather.mainScreen.data.mappers.ForecastMapper
-import com.maximapps.maxim_weather.mainScreen.data.mappers.IconMapper
-import com.maximapps.maxim_weather.mainScreen.data.mappers.ResponseMapper
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
@@ -24,7 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
@@ -87,7 +83,7 @@ class DefaultWeatherRepositoryTest {
                 )
             )
         )
-        repository.getForecast(anyString()).subscribe(testObserver)
+        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue(expected)
 
     }
@@ -99,7 +95,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.getForecast(anyString()).subscribe(testObserver)
+        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherCondition == Undefined
         }
@@ -112,7 +108,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.getForecast(anyString()).subscribe(testObserver)
+        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].iconResId == R.mipmap.few_clouds
         }
