@@ -1,12 +1,12 @@
 package com.maximapps.maxim_weather.data.mappers
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.core.Mapper
+import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.data.network.models.Response
 import com.maximapps.maxim_weather.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.domain.models.Undefined
 import com.maximapps.maxim_weather.domain.models.WeatherData
-import com.maximapps.maxim_weather.ext.capitalized
+import com.maximapps.maxim_weather.common.utils.capitalized
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

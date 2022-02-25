@@ -1,6 +1,6 @@
 package com.maximapps.maxim_weather.data.mappers
 
-import com.maximapps.maxim_weather.core.Mapper
+import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.data.network.IconTypes
 import com.maximapps.maxim_weather.data.network.models.ForecastEntity
 import com.maximapps.maxim_weather.domain.models.Forecast

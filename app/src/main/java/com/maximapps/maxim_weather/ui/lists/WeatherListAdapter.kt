@@ -1,6 +1,6 @@
 package com.maximapps.maxim_weather.ui.lists
 
-import com.maximapps.maxim_weather.core.listAdapterOf
+import com.maximapps.maxim_weather.common.listAdapterOf
 import com.maximapps.maxim_weather.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.ui.lists.viewholders.DetailedForecastViewHolder
 import com.maximapps.maxim_weather.ui.lists.viewholders.TodayForecastViewHolder

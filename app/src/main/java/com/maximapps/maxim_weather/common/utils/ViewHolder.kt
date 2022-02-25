@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ext
+package com.maximapps.maxim_weather.common.utils
 
 import androidx.recyclerview.widget.RecyclerView
 
