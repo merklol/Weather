@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.main
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactory
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.ui.lists.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

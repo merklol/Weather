@@ -1,9 +1,15 @@
-package com.maximapps.maxim_weather.ui.lists
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import com.maximapps.maxim_weather.common.listAdapterOf
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.ui.lists.viewholders.DetailedForecastViewHolder
-import com.maximapps.maxim_weather.ui.lists.viewholders.TodayForecastViewHolder
+
+/**
+ * Weather list view types.
+ */
+object ViewTypes {
+    const val TodayForecast = 0
+    const val DetailedForecast = 1
+}
 
 /**
  * Creates a ListAdapter for the weather forecast list.

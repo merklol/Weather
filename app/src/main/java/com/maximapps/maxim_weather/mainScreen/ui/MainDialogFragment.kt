@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.main
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import android.content.Context
 import android.os.Bundle

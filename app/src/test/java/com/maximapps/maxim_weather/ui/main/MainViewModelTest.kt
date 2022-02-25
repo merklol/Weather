@@ -5,6 +5,8 @@ import androidx.lifecycle.Observer
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.ui.MainState
+import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks

@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.main
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

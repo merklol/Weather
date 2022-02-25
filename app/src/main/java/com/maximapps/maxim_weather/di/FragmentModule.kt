@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.di
 
-import com.maximapps.maxim_weather.ui.main.MainDialogFragment
-import com.maximapps.maxim_weather.ui.main.MainFragment
+import com.maximapps.maxim_weather.mainScreen.ui.MainDialogFragment
+import com.maximapps.maxim_weather.mainScreen.ui.MainFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

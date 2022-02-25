@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.ui.main
+package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.annotation.StringRes
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
