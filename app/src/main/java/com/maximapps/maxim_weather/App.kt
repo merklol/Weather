@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather
 
 import android.app.Application
-import com.maximapps.maxim_weather.di.DaggerAppComponent
+import com.maximapps.maxim_weather.common.di.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject

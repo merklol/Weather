@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentDialogMainBinding
-import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactory
+import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

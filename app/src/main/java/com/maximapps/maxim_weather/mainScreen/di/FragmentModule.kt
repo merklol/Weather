@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.di
+package com.maximapps.maxim_weather.mainScreen.di
 
 import com.maximapps.maxim_weather.mainScreen.ui.MainDialogFragment
 import com.maximapps.maxim_weather.mainScreen.ui.MainFragment

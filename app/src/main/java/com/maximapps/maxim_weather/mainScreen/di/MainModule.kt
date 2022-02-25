@@ -1,25 +1,24 @@
 package com.maximapps.maxim_weather.mainScreen.di
 
+import androidx.lifecycle.ViewModel
+import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
 import com.maximapps.maxim_weather.mainScreen.data.DefaultWeatherRepository
-import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import retrofit2.Retrofit
+import dagger.multibindings.IntoMap
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [NetworkModule::class, FragmentModule::class])
 @Suppress("unused")
 interface MainModule {
     @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
     @Singleton
     fun bindsWeatherRepository(repository: DefaultWeatherRepository): WeatherRepository
-
-    companion object {
-        @Provides
-        @Singleton
-        fun providesOpenWeatherService(retrofit: Retrofit): WeatherService =
-            retrofit.create(WeatherService::class.java)
-    }
 }

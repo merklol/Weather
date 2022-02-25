@@ -1,9 +1,8 @@
-package com.maximapps.maxim_weather.di
+package com.maximapps.maxim_weather.common.di
 
 import android.app.Application
 import com.maximapps.maxim_weather.App
-import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactoryModule
-import com.maximapps.maxim_weather.di.viewmodels.ViewModelsModule
+import com.maximapps.maxim_weather.common.di.factory.ViewModelFactoryModule
 import com.maximapps.maxim_weather.mainScreen.di.MainModule
 import dagger.BindsInstance
 import dagger.Component
@@ -13,12 +12,10 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        AndroidInjectionModule::class,
         AppModule::class,
         MainModule::class,
-        FragmentModule::class,
         ViewModelFactoryModule::class,
-        ViewModelsModule::class
+        AndroidInjectionModule::class,
     ]
 )
 interface AppComponent {

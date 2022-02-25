@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.di
+package com.maximapps.maxim_weather.common.di
 
 import com.maximapps.maxim_weather.BuildConfig
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.di.viewmodels
+package com.maximapps.maxim_weather.common.di.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
