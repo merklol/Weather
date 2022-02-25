@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.ui
+package com.maximapps.maxim_weather.mainScreen.ui.adapter
 
 import com.maximapps.maxim_weather.common.listAdapterOf
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast

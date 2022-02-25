@@ -14,6 +14,7 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.ui.adapter.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

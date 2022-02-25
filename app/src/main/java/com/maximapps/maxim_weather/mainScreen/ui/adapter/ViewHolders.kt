@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.ui
+package com.maximapps.maxim_weather.mainScreen.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
