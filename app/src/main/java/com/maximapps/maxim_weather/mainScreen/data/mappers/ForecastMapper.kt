@@ -1,9 +1,9 @@
-package com.maximapps.maxim_weather.data.mappers
+package com.maximapps.maxim_weather.mainScreen.data.mappers
 
 import com.maximapps.maxim_weather.common.mappers.Mapper
-import com.maximapps.maxim_weather.data.network.IconTypes
-import com.maximapps.maxim_weather.data.network.models.ForecastEntity
-import com.maximapps.maxim_weather.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.data.network.IconTypes
+import com.maximapps.maxim_weather.mainScreen.data.network.models.ForecastEntity
+import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

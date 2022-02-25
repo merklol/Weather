@@ -1,7 +1,6 @@
 package com.maximapps.maxim_weather.di
 
 import com.maximapps.maxim_weather.BuildConfig
-import com.maximapps.maxim_weather.data.network.WeatherService
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -47,9 +46,4 @@ class AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
-
-    @Provides
-    @Singleton
-    fun providesOpenWeatherService(retrofit: Retrofit): WeatherService =
-        retrofit.create(WeatherService::class.java)
 }

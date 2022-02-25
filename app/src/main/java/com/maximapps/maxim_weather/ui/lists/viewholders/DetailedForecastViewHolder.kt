@@ -6,7 +6,7 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.ListAdapter
 import com.maximapps.maxim_weather.common.listAdapterOf
 import com.maximapps.maxim_weather.databinding.ListItemViewDetailedForecastBinding
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.common.utils.getString
 import com.maximapps.maxim_weather.common.utils.toFormattedDate
 

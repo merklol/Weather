@@ -1,15 +1,16 @@
 package com.maximapps.maxim_weather.data
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.data.mappers.ForecastMapper
-import com.maximapps.maxim_weather.data.mappers.IconMapper
-import com.maximapps.maxim_weather.data.mappers.ResponseMapper
-import com.maximapps.maxim_weather.data.network.WeatherService
-import com.maximapps.maxim_weather.domain.WeatherRepository
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.domain.models.Forecast
-import com.maximapps.maxim_weather.domain.models.Undefined
-import com.maximapps.maxim_weather.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.data.DefaultWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.data.mappers.ForecastMapper
+import com.maximapps.maxim_weather.mainScreen.data.mappers.IconMapper
+import com.maximapps.maxim_weather.mainScreen.data.mappers.ResponseMapper
+import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import com.maximapps.maxim_weather.utils.readFileFromResources
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory

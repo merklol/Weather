@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactory
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.ui.lists.weatherListAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject

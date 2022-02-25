@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.data.network
+package com.maximapps.maxim_weather.mainScreen.data.network
 
 /**
  * Weather condition codes

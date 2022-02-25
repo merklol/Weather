@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.domain.models
+package com.maximapps.maxim_weather.mainScreen.domain.models
 
 import java.util.Date
 

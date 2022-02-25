@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.ui.main
 
 import androidx.annotation.StringRes
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 
 sealed class MainState {
     object Loading : MainState()

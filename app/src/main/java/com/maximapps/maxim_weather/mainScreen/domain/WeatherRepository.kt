@@ -1,6 +1,6 @@
-package com.maximapps.maxim_weather.domain
+package com.maximapps.maxim_weather.mainScreen.domain
 
-import com.maximapps.maxim_weather.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.core.Single
 
 /**

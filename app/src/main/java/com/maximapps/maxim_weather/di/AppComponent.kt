@@ -4,6 +4,7 @@ import android.app.Application
 import com.maximapps.maxim_weather.App
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelFactoryModule
 import com.maximapps.maxim_weather.di.viewmodels.ViewModelsModule
+import com.maximapps.maxim_weather.mainScreen.di.MainModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

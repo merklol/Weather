@@ -3,7 +3,7 @@ package com.maximapps.maxim_weather.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers

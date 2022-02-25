@@ -3,14 +3,13 @@ package com.maximapps.maxim_weather.ui.main
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.domain.WeatherRepository
-import com.maximapps.maxim_weather.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.slot
 import io.reactivex.rxjava3.core.Single
 import org.hamcrest.CoreMatchers

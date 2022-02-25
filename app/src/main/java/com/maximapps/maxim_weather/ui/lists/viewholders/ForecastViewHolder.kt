@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.ListAdapter
 import com.maximapps.maxim_weather.databinding.ListItemViewForecastBinding
-import com.maximapps.maxim_weather.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
 import com.maximapps.maxim_weather.common.utils.getString
 import com.maximapps.maxim_weather.common.utils.toFormattedTime
 

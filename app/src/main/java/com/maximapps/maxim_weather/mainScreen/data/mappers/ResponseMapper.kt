@@ -1,11 +1,11 @@
-package com.maximapps.maxim_weather.data.mappers
+package com.maximapps.maxim_weather.mainScreen.data.mappers
 
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.mappers.Mapper
-import com.maximapps.maxim_weather.data.network.models.Response
-import com.maximapps.maxim_weather.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.domain.models.Undefined
-import com.maximapps.maxim_weather.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.data.network.models.Response
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.common.utils.capitalized
 import java.util.Date
 import java.util.concurrent.TimeUnit
