@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.data.mappers
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.common.Mapper
+import com.maximapps.maxim_weather.common.mappers.Mapper
 import com.maximapps.maxim_weather.data.network.IconTypes
 import javax.inject.Inject
 

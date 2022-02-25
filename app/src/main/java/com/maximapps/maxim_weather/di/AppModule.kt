@@ -16,8 +16,8 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun providesAuthorizationInterceptor(): Interceptor = object : Interceptor {
-        override fun intercept(chain: Interceptor.Chain) = chain.proceed(
+    fun providesAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
+        chain.proceed(
             chain.request().newBuilder()
                 .addHeader(name = "x-api-key", value = BuildConfig.OpenWeatherApiKey)
                 .build()

@@ -9,7 +9,6 @@ import javax.inject.Singleton
 @Module
 @Suppress("unused")
 interface MainModule {
-
     @Binds
     @Singleton
     fun bindsWeatherRepository(repository: DefaultWeatherRepository): WeatherRepository
