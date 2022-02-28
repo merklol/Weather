@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather
+package com.maximapps.maxim_weather.common
 
 import android.app.Application
 import com.maximapps.maxim_weather.common.di.DaggerAppComponent
