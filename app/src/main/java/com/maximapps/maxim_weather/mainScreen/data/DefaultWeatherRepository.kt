@@ -4,6 +4,7 @@ import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -14,7 +15,6 @@ class DefaultWeatherRepository @Inject constructor(
     private val mapper: ResponseMapper
 ) : WeatherRepository {
 
-    override fun fetchForecast(cityName: String): Single<WeatherData> {
-        return service.fetchForecast(cityName).map { mapper.map(it) }
-    }
+    override fun fetchForecast(cityName: String): Single<WeatherData> =
+        service.fetchForecast(cityName).map { mapper.map(it) }.subscribeOn(Schedulers.io())
 }

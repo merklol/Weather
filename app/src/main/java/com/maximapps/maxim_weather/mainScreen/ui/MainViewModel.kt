@@ -9,7 +9,6 @@ import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -31,7 +30,6 @@ class MainViewModel @Inject constructor(
         disposables.add(
             repository.fetchForecast(cityName)
                 .doOnSubscribe { _isLoading.postValue(true) }
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::onSuccess, ::onError)
         )
