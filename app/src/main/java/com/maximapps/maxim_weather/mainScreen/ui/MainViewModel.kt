@@ -17,28 +17,29 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
-    private val _data = MutableLiveData<WeatherData>()
-    private val _error = SingleLiveEvent<Int>()
-    private val _isLoading = SingleLiveEvent<Boolean>()
 
+    private val _data = MutableLiveData<WeatherData>()
     val data: LiveData<WeatherData> = _data
+
+    private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _error = SingleLiveEvent<Int>()
     val error: LiveData<Int> = _error
 
     fun fetchNewForecast(cityName: String) {
-        isFirstLaunch = true
-        fetchForecast(cityName)
+        disposables.add(
+            repository.fetchForecast(cityName)
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::onSuccess, ::onError)
+        )
     }
 
     fun fetchForecast(cityName: String) {
         if (isFirstLaunch) {
-            disposables.add(
-                repository.fetchForecast(cityName)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { _isLoading.postValue(true) }
-                    .subscribe(::onSuccess, ::onError)
-            )
+            fetchNewForecast(cityName)
             isFirstLaunch = false
         }
     }
