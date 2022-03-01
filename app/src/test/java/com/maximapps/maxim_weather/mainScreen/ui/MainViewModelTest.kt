@@ -10,17 +10,15 @@ import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.slot
+import io.mockk.verify
 import io.reactivex.rxjava3.core.Single
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.anyString
 
 @RunWith(JUnit4::class)
 class MainViewModelTest {
@@ -30,22 +28,27 @@ class MainViewModelTest {
     @get:Rule
     var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
+    private lateinit var viewModel: MainViewModel
+
     @MockK
-    lateinit var liveDataObserver: Observer<MainState>
+    lateinit var isLoadingObserver: Observer<Boolean>
+
+    @MockK
+    lateinit var dataObserver: Observer<WeatherData>
+
+    @MockK
+    lateinit var errorObserver: Observer<Int>
 
     @MockK
     lateinit var repository: WeatherRepository
-
-    private lateinit var viewModel: MainViewModel
-    private val slots = arrayListOf<MainState>()
 
     @Before
     fun setup() {
         MockKAnnotations.init(this)
         viewModel = MainViewModel(repository)
-        val slot = slot<MainState>()
-        every { liveDataObserver.onChanged(capture(slot)) } answers { slots.add(slot.captured) }
-
+        every { isLoadingObserver.onChanged(any()) } answers { }
+        every { dataObserver.onChanged(any()) } answers { }
+        every { errorObserver.onChanged(any()) } answers { }
     }
 
     @After
@@ -55,32 +58,25 @@ class MainViewModelTest {
 
     @Test
     fun `when getForecast return good response the state switch to Loading and then to Success`() {
-        val data = WeatherData("", listOf())
-        every { repository.getForecast(ArgumentMatchers.anyString()) } returns Single.just(data)
+        every { repository.fetchForecast(anyString()) } returns Single.just(WeatherData())
+        viewModel.isLoading.observeForever(isLoadingObserver)
+        viewModel.data.observeForever(dataObserver)
 
-        viewModel.liveData.observeForever(liveDataObserver)
-        viewModel.getForecast(ArgumentMatchers.anyString())
+        viewModel.fetchForecast(anyString())
 
-        MatcherAssert.assertThat(slots[0], CoreMatchers.`is`(MainState.Loading))
-        MatcherAssert.assertThat(
-            slots[1],
-            CoreMatchers.`is`(MainState.Loaded(data.cityName, data.detailedForecast))
-        )
+        verify { isLoadingObserver.onChanged(true) }
+        verify { dataObserver.onChanged(WeatherData()) }
     }
 
     @Test
     fun `when getForecast return bad response the state switch to Loading and then to Fail`() {
-        every { repository.getForecast(ArgumentMatchers.anyString()) } returns Single.error(
-            Exception()
-        )
+        every { repository.fetchForecast(anyString()) } returns Single.error(Exception())
+        viewModel.isLoading.observeForever(isLoadingObserver)
+        viewModel.error.observeForever(errorObserver)
 
-        viewModel.liveData.observeForever(liveDataObserver)
-        viewModel.getForecast(ArgumentMatchers.anyString())
+        viewModel.fetchForecast(anyString())
 
-        MatcherAssert.assertThat(slots[0], CoreMatchers.`is`(MainState.Loading))
-        MatcherAssert.assertThat(
-            slots[1],
-            CoreMatchers.`is`(MainState.Error(R.string.error_message))
-        )
+        verify { isLoadingObserver.onChanged(true) }
+        verify { errorObserver.onChanged(R.string.error_message) }
     }
 }

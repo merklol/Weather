@@ -83,7 +83,7 @@ class DefaultWeatherRepositoryTest {
                 )
             )
         )
-        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue(expected)
 
     }
@@ -95,7 +95,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherCondition == Undefined
         }
@@ -108,7 +108,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.getForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].iconResId == R.mipmap.few_clouds
         }

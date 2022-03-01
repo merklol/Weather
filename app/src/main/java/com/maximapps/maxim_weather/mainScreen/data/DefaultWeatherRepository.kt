@@ -15,7 +15,6 @@ class DefaultWeatherRepository @Inject constructor(
     private val mapper: ResponseMapper
 ) : WeatherRepository {
 
-    override fun getForecast(cityName: String): Single<WeatherData> {
-        return service.getForecast(cityName).subscribeOn(Schedulers.io()).map { mapper.map(it) }
-    }
+    override fun fetchForecast(cityName: String): Single<WeatherData> =
+        service.fetchForecast(cityName).map { mapper.map(it) }.subscribeOn(Schedulers.io())
 }

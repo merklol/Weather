@@ -31,7 +31,7 @@ class MainDialogFragment : DialogFragment(R.layout.fragment_dialog_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addBtn.setOnClickListener {
-            viewModel.getForecast(binding.textInput.text.toString())
+            viewModel.fetchNewForecast(binding.textInput.text.toString())
             dismiss()
         }
         binding.cancelBtn.setOnClickListener { dismiss() }
