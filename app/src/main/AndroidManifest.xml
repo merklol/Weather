@@ -15,7 +15,7 @@
         <activity
             android:name=".common.HostActivity"
             android:exported="true"
-            android:screenOrientation="nosensor">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
