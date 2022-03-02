@@ -61,6 +61,12 @@ dependencies {
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
 
+    //FastAdapter
+    implementation("com.mikepenz:fastadapter:5.6.0")
+    implementation("com.mikepenz:fastadapter-extensions-diff:5.6.0")
+    implementation("com.mikepenz:fastadapter-extensions-binding:5.6.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
     //ViewBindingPropertyDelegate
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
 
