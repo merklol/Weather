@@ -59,8 +59,8 @@ class MainViewModelTest {
     @Test
     fun `when getForecast return good response the state switch to Loading and then to Success`() {
         every { repository.fetchForecast(anyString()) } returns Single.just(WeatherData())
-        viewModel.isLoading.observeForever(isLoadingObserver)
-        viewModel.data.observeForever(dataObserver)
+        viewModel.loaderVisibility.observeForever(isLoadingObserver)
+        viewModel.weatherData.observeForever(dataObserver)
 
         viewModel.fetchForecast(anyString())
 
@@ -71,8 +71,8 @@ class MainViewModelTest {
     @Test
     fun `when getForecast return bad response the state switch to Loading and then to Fail`() {
         every { repository.fetchForecast(anyString()) } returns Single.error(Exception())
-        viewModel.isLoading.observeForever(isLoadingObserver)
-        viewModel.error.observeForever(errorObserver)
+        viewModel.loaderVisibility.observeForever(isLoadingObserver)
+        viewModel.errorMessage.observeForever(errorObserver)
 
         viewModel.fetchForecast(anyString())
 

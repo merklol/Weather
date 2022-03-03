@@ -4,7 +4,7 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Temperature
 import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
@@ -71,8 +71,8 @@ class DefaultWeatherRepositoryTest {
                     weatherCondition = "Overcast clouds",
                     feelsLike = -3,
                     iconResId = R.mipmap.few_clouds,
-                    details = listOf(
-                        Forecast(
+                    temperatureList = listOf(
+                        Temperature(
                             date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
                             temperature = -1,
                             minTemperature = -1,

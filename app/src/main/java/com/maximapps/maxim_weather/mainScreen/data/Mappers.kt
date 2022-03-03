@@ -7,7 +7,7 @@ import com.maximapps.maxim_weather.common.utils.capitalized
 import com.maximapps.maxim_weather.mainScreen.data.network.ForecastEntity
 import com.maximapps.maxim_weather.mainScreen.data.network.Response
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.Temperature
 import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import java.util.Date
@@ -37,7 +37,7 @@ class ResponseMapper @Inject constructor(
                     feelsLike = main.feelsLike.roundToInt(),
                     weatherCondition = weatherData?.description?.capitalized ?: Undefined,
                     iconResId = weatherData?.let { iconMapper.map(it.icon) } ?: R.mipmap.few_clouds,
-                    details = item.value.map { forecast -> forecastMapper.map(forecast) }
+                    temperatureList = item.value.map { forecast -> forecastMapper.map(forecast) }
                 )
             }
         }
@@ -45,13 +45,13 @@ class ResponseMapper @Inject constructor(
 }
 
 /**
- * Map a [ForecastEntity] to a [Forecast] instance from the Domain layer.
+ * Map a [ForecastEntity] to a [Temperature] instance from the Domain layer.
  */
 class ForecastMapper @Inject constructor(
     private val mapper: IconMapper
-) : Mapper<ForecastEntity, Forecast> {
+) : Mapper<ForecastEntity, Temperature> {
     override fun map(input: ForecastEntity) = with(input) {
-        Forecast(
+        Temperature(
             Date(TimeUnit.SECONDS.toMillis(dt)),
             main.temp.roundToInt(),
             main.tempMin.roundToInt(),

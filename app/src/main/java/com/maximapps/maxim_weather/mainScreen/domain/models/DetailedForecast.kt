@@ -13,5 +13,5 @@ data class DetailedForecast(
     val feelsLike: Int,
     val weatherCondition: String,
     val iconResId: Int,
-    val details: List<Forecast>
+    val temperatureList: List<Temperature>
 )
