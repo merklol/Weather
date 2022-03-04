@@ -85,6 +85,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            tools:listitem="@layout/list_item_view_temperature" />
+            tools:listitem="@layout/list_item_view_weather_forecast" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
