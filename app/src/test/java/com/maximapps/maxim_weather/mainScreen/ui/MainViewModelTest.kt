@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
-import com.mikepenz.fastadapter.GenericItem
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -35,7 +35,7 @@ class MainViewModelTest {
     lateinit var isLoadingObserver: Observer<Boolean>
 
     @MockK
-    lateinit var dataObserver: Observer<List<GenericItem>>
+    lateinit var dataObserver: Observer<List<DetailedForecast>>
 
     @MockK
     lateinit var errorObserver: Observer<Int>
@@ -46,7 +46,7 @@ class MainViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        viewModel = MainViewModel(repository, ItemMapper())
+        viewModel = MainViewModel(repository)
         every { isLoadingObserver.onChanged(any()) } answers { }
         every { dataObserver.onChanged(any()) } answers { }
         every { errorObserver.onChanged(any()) } answers { }
