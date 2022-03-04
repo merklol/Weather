@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.GenericItem
@@ -52,25 +53,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun showProgressIndicator(isVisible: Boolean) {
-        if (isVisible) {
-            binding.weatherList.isVisible = false
-            binding.progressIndicator.isVisible = true
+    private fun showScreenTitle(title: String) {
+        binding.toolbar.title.text = title
+    }
+
+    private fun showWeatherData(data: List<DetailedForecast>) {
+        FastAdapterDiffUtil[adapter] = data.mapIndexed { index, detailedForecast ->
+            when (index) {
+                0 -> TodayForecastItem(detailedForecast)
+                else -> DetailedForecastItem(detailedForecast)
+            }
         }
     }
 
-    private fun showWeatherData(data: List<GenericItem>) {
-        binding.weatherList.isVisible = true
-        binding.progressIndicator.isVisible = false
-        FastAdapterDiffUtil[adapter] = data
-    }
-
     private fun showErrorMessage(@StringRes resId: Int) {
-        binding.progressIndicator.isVisible = false
         Snackbar.make(requireView(), resId, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun showScreenTitle(title: String) {
-        binding.toolbar.title.text = title
+    private fun showProgressIndicator(isVisible: Boolean) {
+        binding.weatherList.isVisible = !isVisible
+        binding.progressIndicator.isVisible = isVisible
     }
 }
