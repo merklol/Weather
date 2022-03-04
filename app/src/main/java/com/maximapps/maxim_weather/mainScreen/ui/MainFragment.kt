@@ -59,9 +59,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun showWeatherData(data: List<DetailedForecast>) {
         FastAdapterDiffUtil[adapter] = data.mapIndexed { index, detailedForecast ->
-            when (index) {
-                0 -> TodayForecastItem(detailedForecast)
-                else -> DetailedForecastItem(detailedForecast)
+            if (index == 0) {
+                TodayForecastItem(detailedForecast)
+            } else {
+                DetailedForecastItem(detailedForecast)
             }
         }
     }
