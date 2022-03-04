@@ -1,5 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.domain.models
 
+import androidx.annotation.DrawableRes
 import java.util.Date
 
 const val Undefined = "undefined"
@@ -12,6 +13,6 @@ data class DetailedForecast(
     val wind: Int,
     val feelsLike: Int,
     val weatherCondition: String,
-    val iconResId: Int,
-    val temperatureList: List<Temperature>
+    @DrawableRes val weatherIcon: Int,
+    val forecastList: List<WeatherForecast>
 )
