@@ -6,15 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.SingleLiveEvent
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
-import com.mikepenz.fastadapter.GenericItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val repository: WeatherRepository,
-    private val mapper: ItemMapper
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
@@ -25,8 +24,8 @@ class MainViewModel @Inject constructor(
     private val _loaderVisibility = MutableLiveData<Boolean>()
     val loaderVisibility: LiveData<Boolean> = _loaderVisibility
 
-    private val _weatherData = MutableLiveData<List<GenericItem>>()
-    val weatherData: LiveData<List<GenericItem>> = _weatherData
+    private val _weatherData = MutableLiveData<List<DetailedForecast>>()
+    val weatherData: LiveData<List<DetailedForecast>> = _weatherData
 
     private val _errorMessage = SingleLiveEvent<Int>()
     val errorMessage: LiveData<Int> = _errorMessage
@@ -50,7 +49,7 @@ class MainViewModel @Inject constructor(
     private fun onSuccess(data: WeatherData) {
         _loaderVisibility.postValue(false)
         _screenTitle.postValue(data.cityName)
-        _weatherData.postValue(mapper.map(data.detailedForecast))
+        _weatherData.postValue(data.detailedForecast)
     }
 
     @Suppress("unused_parameter")
