@@ -4,7 +4,7 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.Forecast
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
@@ -70,14 +70,14 @@ class DefaultWeatherRepositoryTest {
                     wind = 2,
                     weatherCondition = "Overcast clouds",
                     feelsLike = -3,
-                    iconResId = R.mipmap.few_clouds,
-                    details = listOf(
-                        Forecast(
+                    weatherIcon = R.mipmap.few_clouds,
+                    forecastList = listOf(
+                        WeatherForecast(
                             date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
                             temperature = -1,
                             minTemperature = -1,
                             maxTemperature = -1,
-                            iconResId = R.mipmap.few_clouds
+                            weatherIcon = R.mipmap.few_clouds
                         )
                     )
                 )
@@ -110,7 +110,7 @@ class DefaultWeatherRepositoryTest {
         )
         repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
-            it.detailedForecast[0].iconResId == R.mipmap.few_clouds
+            it.detailedForecast[0].weatherIcon == R.mipmap.few_clouds
         }
     }
 }

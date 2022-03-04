@@ -6,30 +6,34 @@ import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.SingleLiveEvent
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val repository: WeatherRepository
+    private val repository: WeatherRepository,
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
 
-    private val _data = MutableLiveData<WeatherData>()
-    val data: LiveData<WeatherData> = _data
+    private val _screenTitle = MutableLiveData<String>()
+    val screenTitle: LiveData<String> = _screenTitle
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _loaderVisibility = MutableLiveData<Boolean>()
+    val loaderVisibility: LiveData<Boolean> = _loaderVisibility
 
-    private val _error = SingleLiveEvent<Int>()
-    val error: LiveData<Int> = _error
+    private val _weatherData = MutableLiveData<List<DetailedForecast>>()
+    val weatherData: LiveData<List<DetailedForecast>> = _weatherData
+
+    private val _errorMessage = SingleLiveEvent<Int>()
+    val errorMessage: LiveData<Int> = _errorMessage
 
     fun fetchNewForecast(cityName: String) {
         disposables.add(
             repository.fetchForecast(cityName)
-                .doOnSubscribe { _isLoading.postValue(true) }
+                .doOnSubscribe { _loaderVisibility.postValue(true) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::onSuccess, ::onError)
         )
@@ -43,15 +47,17 @@ class MainViewModel @Inject constructor(
     }
 
     private fun onSuccess(data: WeatherData) {
-        _isLoading.postValue(false)
-        _data.postValue(data)
+        _loaderVisibility.postValue(false)
+        _screenTitle.postValue(data.cityName)
+        _weatherData.postValue(data.detailedForecast)
     }
 
     @Suppress("unused_parameter")
     private fun onError(throwable: Throwable) {
-        _isLoading.postValue(false)
-        _data.postValue(WeatherData())
-        _error.postValue(R.string.error_message)
+        _screenTitle.postValue("")
+        _loaderVisibility.postValue(false)
+        _weatherData.postValue(emptyList())
+        _errorMessage.postValue(R.string.error_message)
     }
 
     override fun onCleared() {

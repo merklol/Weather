@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
@@ -34,7 +35,7 @@ class MainViewModelTest {
     lateinit var isLoadingObserver: Observer<Boolean>
 
     @MockK
-    lateinit var dataObserver: Observer<WeatherData>
+    lateinit var dataObserver: Observer<List<DetailedForecast>>
 
     @MockK
     lateinit var errorObserver: Observer<Int>
@@ -59,20 +60,20 @@ class MainViewModelTest {
     @Test
     fun `when getForecast return good response the state switch to Loading and then to Success`() {
         every { repository.fetchForecast(anyString()) } returns Single.just(WeatherData())
-        viewModel.isLoading.observeForever(isLoadingObserver)
-        viewModel.data.observeForever(dataObserver)
+        viewModel.loaderVisibility.observeForever(isLoadingObserver)
+        viewModel.weatherData.observeForever(dataObserver)
 
         viewModel.fetchForecast(anyString())
 
         verify { isLoadingObserver.onChanged(true) }
-        verify { dataObserver.onChanged(WeatherData()) }
+        verify { dataObserver.onChanged(emptyList()) }
     }
 
     @Test
     fun `when getForecast return bad response the state switch to Loading and then to Fail`() {
         every { repository.fetchForecast(anyString()) } returns Single.error(Exception())
-        viewModel.isLoading.observeForever(isLoadingObserver)
-        viewModel.error.observeForever(errorObserver)
+        viewModel.loaderVisibility.observeForever(isLoadingObserver)
+        viewModel.errorMessage.observeForever(errorObserver)
 
         viewModel.fetchForecast(anyString())
 
