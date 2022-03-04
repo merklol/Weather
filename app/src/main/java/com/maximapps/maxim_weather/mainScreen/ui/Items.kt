@@ -6,38 +6,38 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.utils.toFormattedDate
 import com.maximapps.maxim_weather.common.utils.toFormattedTime
 import com.maximapps.maxim_weather.databinding.ListItemViewDetailedForecastBinding
-import com.maximapps.maxim_weather.databinding.ListItemViewTemperatureBinding
 import com.maximapps.maxim_weather.databinding.ListItemViewTodayForecastBinding
+import com.maximapps.maxim_weather.databinding.ListItemViewWeatherForecastBinding
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.Temperature
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherForecast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 
 /**
- * Item for temperature card list item view.
+ * Item for weather forecast card list item view.
  */
-class TemperatureItem(private val temperature: Temperature) :
-    AbstractBindingItem<ListItemViewTemperatureBinding>() {
+class WeatherForecastItem(private val weatherForecast: WeatherForecast) :
+    AbstractBindingItem<ListItemViewWeatherForecastBinding>() {
     override val type: Int
-        get() = R.id.temperatureCardView
+        get() = R.id.weatherForecastCardView
 
     @Suppress("unused_parameter")
     override var identifier: Long
-        get() = temperature.hashCode().toLong()
+        get() = weatherForecast.hashCode().toLong()
         set(value) {}
 
     override fun createBinding(
         inflater: LayoutInflater,
         parent: ViewGroup?
-    ) = ListItemViewTemperatureBinding.inflate(inflater, parent, false)
+    ) = ListItemViewWeatherForecastBinding.inflate(inflater, parent, false)
 
-    override fun bindView(binding: ListItemViewTemperatureBinding, payloads: List<Any>) {
+    override fun bindView(binding: ListItemViewWeatherForecastBinding, payloads: List<Any>) {
         with(binding.root.resources) {
-            binding.time.text = temperature.date.toFormattedTime()
-            binding.weatherIcon.setImageResource(temperature.iconResId)
-            binding.temperature.text = getString(R.string.temperature, temperature.temperature)
+            binding.time.text = weatherForecast.date.toFormattedTime()
+            binding.weatherIcon.setImageResource(weatherForecast.weatherIcon)
+            binding.temperature.text = getString(R.string.temperature, weatherForecast.temperature)
         }
     }
 }
@@ -62,7 +62,7 @@ class TodayForecastItem(private val item: DetailedForecast) :
 
     override fun bindView(binding: ListItemViewTodayForecastBinding, payloads: List<Any>) {
         with(binding.root.resources) {
-            binding.weatherIcon.setImageResource(item.iconResId)
+            binding.weatherIcon.setImageResource(item.weatherIcon)
             binding.temperature.text = getString(R.string.temperature, item.temperature)
             binding.date.text = getString(R.string.current_date, item.date.toFormattedDate())
             binding.details.text = getString(
@@ -77,7 +77,7 @@ class TodayForecastItem(private val item: DetailedForecast) :
  */
 class DetailedForecastItem(private val item: DetailedForecast) :
     AbstractBindingItem<ListItemViewDetailedForecastBinding>() {
-    private val adapter = ItemAdapter<TemperatureItem>()
+    private val adapter = ItemAdapter<WeatherForecastItem>()
     private val fastAdapter = FastAdapter.with(adapter)
 
     override val type: Int
@@ -94,7 +94,7 @@ class DetailedForecastItem(private val item: DetailedForecast) :
     ) = ListItemViewDetailedForecastBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: ListItemViewDetailedForecastBinding, payloads: List<Any>) {
-        FastAdapterDiffUtil[adapter] = item.temperatureList.map { TemperatureItem(it) }
+        FastAdapterDiffUtil[adapter] = item.forecastList.map { WeatherForecastItem(it) }
         with(binding.root.resources) {
             binding.date.text = item.date.toFormattedDate()
             binding.detailList.adapter = fastAdapter
