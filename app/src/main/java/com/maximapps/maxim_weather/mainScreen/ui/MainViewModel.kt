@@ -37,12 +37,11 @@ class MainViewModel @Inject constructor(
     val errorMessage = _errorMessage.asSharedFlow()
 
     fun fetchNewForecast(cityName: String) {
-        disposables.add(
-            repository.fetchForecast(cityName)
-                .doOnSubscribe { _loaderVisibility.value = true }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onSuccess, ::onError)
-        )
+        repository.fetchForecast(cityName)
+            .doOnSubscribe { _loaderVisibility.value = true }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSuccess, ::onError)
+            .also { disposables.add(it) }
     }
 
     fun fetchForecast(cityName: String) {
