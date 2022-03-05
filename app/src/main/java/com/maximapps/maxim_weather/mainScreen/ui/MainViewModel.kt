@@ -1,15 +1,16 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.common.SingleLiveEvent
+import com.maximapps.maxim_weather.common.MutableSingleEventFlow
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -18,25 +19,24 @@ class MainViewModel @Inject constructor(
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
 
-    private val _screenTitle = MutableLiveData<String>()
-    val screenTitle: LiveData<String> = _screenTitle
+    private val _screenTitle = MutableStateFlow("")
+    val screenTitle = _screenTitle.asStateFlow()
 
-    private val _loaderVisibility = MutableLiveData<Boolean>()
-    val loaderVisibility: LiveData<Boolean> = _loaderVisibility
+    private val _loaderVisibility = MutableStateFlow(true)
+    val loaderVisibility = _loaderVisibility.asStateFlow()
 
-    private val _weatherData = MutableLiveData<List<DetailedForecast>>()
-    val weatherData: LiveData<List<DetailedForecast>> = _weatherData
+    private val _weatherData = MutableStateFlow(emptyList<DetailedForecast>())
+    val weatherData = _weatherData.asStateFlow()
 
-    private val _errorMessage = SingleLiveEvent<Int>()
-    val errorMessage: LiveData<Int> = _errorMessage
+    private val _errorMessage = MutableSingleEventFlow<Int>()
+    val errorMessage = _errorMessage.asSharedFlow()
 
     fun fetchNewForecast(cityName: String) {
-        disposables.add(
-            repository.fetchForecast(cityName)
-                .doOnSubscribe { _loaderVisibility.postValue(true) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onSuccess, ::onError)
-        )
+        repository.fetchForecast(cityName)
+            .doOnSubscribe { _loaderVisibility.value = true }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSuccess, ::onError)
+            .also { disposables.add(it) }
     }
 
     fun fetchForecast(cityName: String) {
@@ -47,17 +47,17 @@ class MainViewModel @Inject constructor(
     }
 
     private fun onSuccess(data: WeatherData) {
-        _loaderVisibility.postValue(false)
-        _screenTitle.postValue(data.cityName)
-        _weatherData.postValue(data.detailedForecast)
+        _loaderVisibility.value = false
+        _screenTitle.value = data.cityName
+        _weatherData.value = data.detailedForecast
     }
 
     @Suppress("unused_parameter")
     private fun onError(throwable: Throwable) {
-        _screenTitle.postValue("")
-        _loaderVisibility.postValue(false)
-        _weatherData.postValue(emptyList())
-        _errorMessage.postValue(R.string.error_message)
+        _screenTitle.value = ""
+        _weatherData.value = emptyList()
+        _loaderVisibility.value = false
+        _errorMessage.tryEmit(R.string.error_message)
     }
 
     override fun onCleared() {

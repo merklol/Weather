@@ -7,11 +7,13 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
+import com.maximapps.maxim_weather.common.utils.observe
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.mikepenz.fastadapter.FastAdapter
@@ -46,10 +48,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         with(viewModel) {
-            screenTitle.observe(viewLifecycleOwner, ::showScreenTitle)
-            weatherData.observe(viewLifecycleOwner, ::showWeatherData)
-            errorMessage.observe(viewLifecycleOwner, ::showErrorMessage)
-            loaderVisibility.observe(viewLifecycleOwner, ::showProgressIndicator)
+            screenTitle.observe(lifecycleScope, ::showScreenTitle)
+            weatherData.observe(lifecycleScope, ::showWeatherData)
+            errorMessage.observe(lifecycleScope, ::showErrorMessage)
+            loaderVisibility.observe(lifecycleScope, ::showProgressIndicator)
         }
     }
 
