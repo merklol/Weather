@@ -1,18 +1,25 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import app.cash.turbine.test
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
-import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import io.reactivex.rxjava3.core.Single
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -22,62 +29,43 @@ import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
 
 @RunWith(JUnit4::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
     @get:Rule
     var testScheduler = RxImmediateSchedulerRule()
 
-    @get:Rule
-    var instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
-
-    private lateinit var viewModel: MainViewModel
-
-    @MockK
-    lateinit var isLoadingObserver: Observer<Boolean>
-
-    @MockK
-    lateinit var dataObserver: Observer<List<DetailedForecast>>
-
-    @MockK
-    lateinit var errorObserver: Observer<Int>
-
     @MockK
     lateinit var repository: WeatherRepository
+    private lateinit var viewModel: MainViewModel
 
     @Before
     fun setup() {
         MockKAnnotations.init(this)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = MainViewModel(repository)
-        every { isLoadingObserver.onChanged(any()) } answers { }
-        every { dataObserver.onChanged(any()) } answers { }
-        every { errorObserver.onChanged(any()) } answers { }
     }
 
     @After
     fun tearDown() {
         clearAllMocks()
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `when getForecast return good response the state switch to Loading and then to Success`() {
+    fun `when getNewForecast return a good response then should show a weather list`() = runTest {
         every { repository.fetchForecast(anyString()) } returns Single.just(WeatherData())
-        viewModel.loaderVisibility.observeForever(isLoadingObserver)
-        viewModel.weatherData.observeForever(dataObserver)
-
-        viewModel.fetchForecast(anyString())
-
-        verify { isLoadingObserver.onChanged(true) }
-        verify { dataObserver.onChanged(emptyList()) }
+        viewModel.fetchNewForecast(anyString())
+        assertThat(viewModel.weatherData.value, `is`(emptyList()))
     }
 
     @Test
-    fun `when getForecast return bad response the state switch to Loading and then to Fail`() {
+    fun `when getNewForecast return a bad response then should show an error message`() = runTest {
         every { repository.fetchForecast(anyString()) } returns Single.error(Exception())
-        viewModel.loaderVisibility.observeForever(isLoadingObserver)
-        viewModel.errorMessage.observeForever(errorObserver)
-
-        viewModel.fetchForecast(anyString())
-
-        verify { isLoadingObserver.onChanged(true) }
-        verify { errorObserver.onChanged(R.string.error_message) }
+        launch {
+            viewModel.errorMessage.test {
+                viewModel.fetchNewForecast(anyString())
+                assertEquals(R.string.error_message, awaitItem())
+            }
+        }
     }
 }

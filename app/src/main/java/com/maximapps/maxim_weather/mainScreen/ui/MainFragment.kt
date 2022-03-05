@@ -7,11 +7,13 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
+import com.maximapps.maxim_weather.common.utils.launchWhenStarted
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.mikepenz.fastadapter.FastAdapter
@@ -20,6 +22,7 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -44,13 +47,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.toolbar.searchBtn.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToMainDialog())
         }
-
-        with(viewModel) {
-            screenTitle.observe(viewLifecycleOwner, ::showScreenTitle)
-            weatherData.observe(viewLifecycleOwner, ::showWeatherData)
-            errorMessage.observe(viewLifecycleOwner, ::showErrorMessage)
-            loaderVisibility.observe(viewLifecycleOwner, ::showProgressIndicator)
-        }
+        viewModel.screenTitle.onEach(::showScreenTitle).launchWhenStarted(lifecycleScope)
+        viewModel.weatherData.onEach(::showWeatherData).launchWhenStarted(lifecycleScope)
+        viewModel.errorMessage.onEach(::showErrorMessage).launchWhenStarted(lifecycleScope)
+        viewModel.loaderVisibility.onEach(::showProgressIndicator).launchWhenStarted(lifecycleScope)
     }
 
     private fun showScreenTitle(title: String) {
