@@ -2,13 +2,12 @@ package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
+import com.maximapps.maxim_weather.common.MutableSingleEventFlow
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,11 +28,7 @@ class MainViewModel @Inject constructor(
     private val _weatherData = MutableStateFlow(emptyList<DetailedForecast>())
     val weatherData = _weatherData.asStateFlow()
 
-    private val _errorMessage = MutableSharedFlow<Int>(
-        replay = 0,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    private val _errorMessage = MutableSingleEventFlow<Int>()
     val errorMessage = _errorMessage.asSharedFlow()
 
     fun fetchNewForecast(cityName: String) {
