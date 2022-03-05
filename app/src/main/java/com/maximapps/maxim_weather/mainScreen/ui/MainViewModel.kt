@@ -1,18 +1,17 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -30,7 +29,11 @@ class MainViewModel @Inject constructor(
     private val _weatherData = MutableStateFlow(emptyList<DetailedForecast>())
     val weatherData = _weatherData.asStateFlow()
 
-    private val _errorMessage = MutableSharedFlow<Int>()
+    private val _errorMessage = MutableSharedFlow<Int>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val errorMessage = _errorMessage.asSharedFlow()
 
     fun fetchNewForecast(cityName: String) {
@@ -49,18 +52,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccess(data: WeatherData) = viewModelScope.launch {
-        _loaderVisibility.emit(false)
-        _screenTitle.emit(data.cityName)
-        _weatherData.emit(data.detailedForecast)
+    private fun onSuccess(data: WeatherData) {
+        _loaderVisibility.value = false
+        _screenTitle.value = data.cityName
+        _weatherData.value = data.detailedForecast
     }
 
     @Suppress("unused_parameter")
-    private fun onError(throwable: Throwable) = viewModelScope.launch {
-        _screenTitle.emit("")
-        _weatherData.emit(emptyList())
-        _loaderVisibility.emit(false)
-        _errorMessage.emit(R.string.error_message)
+    private fun onError(throwable: Throwable) {
+        _screenTitle.value = ""
+        _weatherData.value = emptyList()
+        _loaderVisibility.value = false
+        _errorMessage.tryEmit(R.string.error_message)
     }
 
     override fun onCleared() {
