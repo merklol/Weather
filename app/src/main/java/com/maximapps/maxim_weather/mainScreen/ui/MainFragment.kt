@@ -36,14 +36,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val adapter = ItemAdapter<GenericItem>()
     private val fastAdapter: GenericFastAdapter = FastAdapter.with(adapter)
 
-    private val request =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                viewModel.fetchNewForecastByLocation()
-            } else {
-                viewModel.showRationaleDialog()
-            }
-        }
+    private val request = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        viewModel.fetchNewForecastByLocation(it)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -99,7 +94,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.rationale_dialog_title)
                 .setMessage(R.string.rationale_dialog_message)
-                .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { _, _ -> viewModel.hideRationaleDialog() }
+                .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { dialog, _ -> dialog.dismiss() }
                 .show()
         }
     }
