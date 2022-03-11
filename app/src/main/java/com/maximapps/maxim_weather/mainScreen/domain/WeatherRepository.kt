@@ -13,4 +13,9 @@ interface WeatherRepository {
      * Fetch weather forecast data with 3-hour step
      */
     fun fetchForecast(cityName: String): Single<WeatherData>
+
+    /**
+     * Fetch weather forecast data with 3-hour step by device location
+     */
+    fun fetchForecastByLocation(): Single<WeatherData>
 }
