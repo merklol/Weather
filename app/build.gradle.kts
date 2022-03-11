@@ -62,6 +62,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
 
+    implementation("com.google.android.gms:play-services-location:19.0.1")
     //FastAdapter
     implementation("com.mikepenz:fastadapter:5.6.0")
     implementation("com.mikepenz:fastadapter-extensions-diff:5.6.0")
