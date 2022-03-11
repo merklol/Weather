@@ -3,29 +3,25 @@ package com.maximapps.maxim_weather.mainScreen.data.lcation
 import android.annotation.SuppressLint
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.maximapps.maxim_weather.common.utils.asSingle
+import com.maximapps.maxim_weather.common.utils.toHours
 import io.reactivex.rxjava3.core.Single
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("MissingPermission")
 class LocationDataSource @Inject constructor(private val client: FusedLocationProviderClient) {
     private val token = CancellationTokenSource().token
 
-    fun getLocation(): Single<Location> = Single.create { emitter ->
-        client.lastLocation.addOnSuccessListener { location: Location? ->
+    fun getLocation(): Single<Location> =
+        client.lastLocation.asSingle().flatMap { location: Location? ->
             location?.let {
-                if (TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - it.time) > 1) {
-                    client.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, token)
-                        .addOnSuccessListener { data -> emitter.onSuccess(data) }
-                        .addOnFailureListener { exception -> emitter.onError(exception) }
+                if ((System.currentTimeMillis() - it.time).toHours() > 1) {
+                    client.getCurrentLocation(PRIORITY_HIGH_ACCURACY, token).asSingle()
                 } else {
-                    emitter.onSuccess(it)
+                    Single.just(it)
                 }
-            } ?: client.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, token)
-                .addOnSuccessListener { data -> emitter.onSuccess(data) }
-                .addOnFailureListener { exception -> emitter.onError(exception) }
+            } ?: client.getCurrentLocation(PRIORITY_HIGH_ACCURACY, token).asSingle()
         }
-    }
 }
