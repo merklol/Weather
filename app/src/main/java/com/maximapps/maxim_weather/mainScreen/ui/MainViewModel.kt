@@ -31,15 +31,19 @@ class MainViewModel @Inject constructor(
     private val _errorMessage = MutableSingleEventFlow<Int>()
     val errorMessage = _errorMessage.asSharedFlow()
 
-    private val _rationaleDialogVisibility = MutableStateFlow(false)
+    private val _rationaleDialogVisibility = MutableSingleEventFlow<Boolean>()
     val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
 
-    fun fetchNewForecastByLocation() {
-        repository.fetchForecastByLocation()
-            .doOnSubscribe { _loaderVisibility.value = true }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onSuccess, ::onError)
-            .also { disposables.add(it) }
+    fun fetchNewForecastByLocation(isGranted: Boolean) {
+        if (isGranted) {
+            repository.fetchForecastByLocation()
+                .doOnSubscribe { _loaderVisibility.value = true }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::onSuccess, ::onError)
+                .also { disposables.add(it) }
+        } else {
+            _rationaleDialogVisibility.tryEmit(true)
+        }
     }
 
     fun fetchNewForecast(cityName: String) {
@@ -55,14 +59,6 @@ class MainViewModel @Inject constructor(
             fetchNewForecast(cityName)
             isFirstLaunch = false
         }
-    }
-
-    fun showRationaleDialog() {
-        _rationaleDialogVisibility.value = true
-    }
-
-    fun hideRationaleDialog() {
-        _rationaleDialogVisibility.value = false
     }
 
     private fun onSuccess(data: WeatherData) {
