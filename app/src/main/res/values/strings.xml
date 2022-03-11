@@ -11,4 +11,7 @@
     <string name="main_dialog_edit_text_hint">Enter city name</string>
     <string name="main_dialog_cancel_btn_text">Cancel</string>
     <string name="main_dialog_add_btn_text">Add</string>
+    <string name="rationale_dialog_title">Location Services</string>
+    <string name="rationale_dialog_message">Your locations settings seems to be set \"Off\". Please verify you\'ve switched Location to \"On\".</string>
+    <string name="rationale_dialog_positive_btn_text">OK</string>
 </resources>
