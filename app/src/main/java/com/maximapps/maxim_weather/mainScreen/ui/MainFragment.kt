@@ -36,6 +36,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val adapter = ItemAdapter<GenericItem>()
     private val fastAdapter: GenericFastAdapter = FastAdapter.with(adapter)
 
+    private val rationaleDialog by lazy {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.rationale_dialog_title)
+            .setMessage(R.string.rationale_dialog_message)
+            .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+    }
+
     private val request = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         viewModel.fetchNewForecastByLocation(it)
     }
@@ -59,6 +69,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
         binding.toolbar.searchBtn.setOnClickListener(::showSearchDialog)
         binding.toolbar.locationBtn.setOnClickListener(::requestPermission)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rationaleDialog.dismiss()
     }
 
     private fun showScreenTitle(title: String) {
@@ -85,13 +100,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun showRationaleDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.rationale_dialog_title)
-            .setMessage(R.string.rationale_dialog_message)
-            .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+        rationaleDialog.show()
     }
 
     @Suppress("unused_parameter")
