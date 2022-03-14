@@ -31,19 +31,19 @@ class MainViewModel @Inject constructor(
     private val _errorMessage = MutableSingleEventFlow<Int>()
     val errorMessage = _errorMessage.asSharedFlow()
 
-    private val _rationaleDialogVisibility = MutableSingleEventFlow<Boolean>()
+    private val _rationaleDialogVisibility = MutableSingleEventFlow<Unit>()
     val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
 
     fun fetchNewForecastByLocation(isGranted: Boolean) {
         if (isGranted) {
-            repository.fetchForecastByLocation()
-                .doOnSubscribe { _loaderVisibility.value = true }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onSuccess, ::onError)
-                .also { disposables.add(it) }
-        } else {
-            _rationaleDialogVisibility.tryEmit(true)
+            _rationaleDialogVisibility.tryEmit(Unit)
+            return
         }
+        repository.fetchForecastByLocation()
+            .doOnSubscribe { _loaderVisibility.value = true }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSuccess, ::onError)
+            .also { disposables.add(it) }
     }
 
     fun fetchNewForecast(cityName: String) {
