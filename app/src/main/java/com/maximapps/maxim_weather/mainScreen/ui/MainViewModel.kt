@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(
     val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
 
     fun fetchNewForecastByLocation(isGranted: Boolean) {
-        if (isGranted) {
+        if (!isGranted) {
             _rationaleDialogVisibility.tryEmit(Unit)
             return
         }
