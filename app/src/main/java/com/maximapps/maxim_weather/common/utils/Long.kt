@@ -5,4 +5,4 @@ import java.util.concurrent.TimeUnit
 /**
  * Returns the converted duration as Hours.
  */
-fun Long.toHours() = TimeUnit.MILLISECONDS.toHours(this)
+fun Long.millisecondsToHours() = TimeUnit.MILLISECONDS.toHours(this)
