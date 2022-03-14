@@ -50,20 +50,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewModel.fetchForecast("Shanghai")
         binding.weatherList.itemAnimator = null
         binding.weatherList.adapter = fastAdapter
-
         with(viewModel) {
             screenTitle.observe(lifecycleScope, ::showScreenTitle)
             weatherData.observe(lifecycleScope, ::showWeatherData)
             errorMessage.observe(lifecycleScope, ::showErrorMessage)
             loaderVisibility.observe(lifecycleScope, ::showProgressIndicator)
-            rationaleDialogVisibility.observe(lifecycleScope, ::showRationaleDialog)
+            rationaleDialogVisibility.observe(lifecycleScope) { showRationaleDialog() }
         }
-        binding.toolbar.searchBtn.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToMainDialog())
-        }
-        binding.toolbar.locationBtn.setOnClickListener {
-            request.launch(permission.ACCESS_FINE_LOCATION)
-        }
+        binding.toolbar.searchBtn.setOnClickListener(::showSearchDialog)
+        binding.toolbar.locationBtn.setOnClickListener(::requestPermission)
     }
 
     private fun showScreenTitle(title: String) {
@@ -89,13 +84,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.progressIndicator.isVisible = isVisible
     }
 
-    private fun showRationaleDialog(isVisible: Boolean) {
-        if (isVisible) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.rationale_dialog_title)
-                .setMessage(R.string.rationale_dialog_message)
-                .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { dialog, _ -> dialog.dismiss() }
-                .show()
-        }
+    private fun showRationaleDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.rationale_dialog_title)
+            .setMessage(R.string.rationale_dialog_message)
+            .setPositiveButton(R.string.rationale_dialog_positive_btn_text) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    @Suppress("unused_parameter")
+    private fun showSearchDialog(view: View) {
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToMainDialog())
+    }
+
+    @Suppress("unused_parameter")
+    private fun requestPermission(view: View) {
+        request.launch(permission.ACCESS_FINE_LOCATION)
     }
 }
