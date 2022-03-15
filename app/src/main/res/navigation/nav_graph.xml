@@ -10,10 +10,18 @@
         <action
             android:id="@+id/action_mainFragment_to_mainDialog"
             app:destination="@id/mainDialog" />
+        <action
+            android:id="@+id/action_mainFragment_to_rationaleDialog"
+            app:destination="@id/rationaleDialog" />
     </fragment>
 
     <dialog
         android:id="@+id/mainDialog"
         android:name="com.maximapps.maxim_weather.mainScreen.ui.MainDialogFragment"
         android:label="Add city" />
+
+    <dialog
+        android:id="@+id/rationaleDialog"
+        android:name="com.maximapps.maxim_weather.mainScreen.ui.RationaleDialogFragment"
+        android:label="Location Services" />
 </navigation>
