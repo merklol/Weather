@@ -3,6 +3,8 @@
     package="com.maximapps.maxim_weather">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".common.App"
@@ -14,8 +16,7 @@
         android:theme="@style/Theme.Maxim_weather">
         <activity
             android:name=".common.HostActivity"
-            android:exported="true"
-           >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

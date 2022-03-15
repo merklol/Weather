@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val repository: WeatherRepository,
+    private val repository: WeatherRepository
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
     private val _screenTitle = MutableStateFlow("")
     val screenTitle = _screenTitle.asStateFlow()
 
-    private val _loaderVisibility = MutableStateFlow(true)
+    private val _loaderVisibility = MutableStateFlow(false)
     val loaderVisibility = _loaderVisibility.asStateFlow()
 
     private val _weatherData = MutableStateFlow(emptyList<DetailedForecast>())
@@ -30,6 +30,21 @@ class MainViewModel @Inject constructor(
 
     private val _errorMessage = MutableSingleEventFlow<Int>()
     val errorMessage = _errorMessage.asSharedFlow()
+
+    private val _rationaleDialogVisibility = MutableSingleEventFlow<Unit>()
+    val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
+
+    fun fetchNewForecastByLocation(isGranted: Boolean) {
+        if (!isGranted) {
+            _rationaleDialogVisibility.tryEmit(Unit)
+            return
+        }
+        repository.fetchForecastByLocation()
+            .doOnSubscribe { _loaderVisibility.value = true }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSuccess, ::onError)
+            .also { disposables.add(it) }
+    }
 
     fun fetchNewForecast(cityName: String) {
         repository.fetchForecast(cityName)

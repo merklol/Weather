@@ -1,5 +1,8 @@
 package com.maximapps.maxim_weather.common.di
 
+import android.app.Application
+import android.content.Context
+import com.google.android.gms.location.LocationServices
 import com.maximapps.maxim_weather.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -13,6 +16,11 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+    @Provides
+    @Singleton
+    fun providesApplicationContext(application: Application): Context =
+        application.applicationContext
+
     @Provides
     @Singleton
     fun providesAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
@@ -46,4 +54,9 @@ class AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
+
+    @Provides
+    @Singleton
+    fun providesFusedLocationProviderClient(context: Context) =
+        LocationServices.getFusedLocationProviderClient(context)
 }
