@@ -97,6 +97,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         activityResultLauncher.launch(permission.ACCESS_FINE_LOCATION)
     }
 
-//endregion
-
+    //endregion
 }
