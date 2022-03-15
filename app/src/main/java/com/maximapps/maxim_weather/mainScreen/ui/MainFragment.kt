@@ -4,7 +4,6 @@ import android.Manifest.permission
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -36,12 +35,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val adapter = ItemAdapter<GenericItem>()
     private val fastAdapter: GenericFastAdapter = FastAdapter.with(adapter)
 
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            viewModel.fetchNewForecastByLocation(isGranted)
+        }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
     }
 
     //region Initialization
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.fetchForecast("Shanghai")
@@ -55,8 +60,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             rationaleDialogVisibility.observe(lifecycleScope) { showRationaleDialog() }
         }
         binding.toolbar.searchBtn.setOnClickListener(::showSearchDialog)
-        val request = registerForActivityResult()
-        binding.toolbar.locationBtn.setOnClickListener { requestPermission(request) }
+        binding.toolbar.locationBtn.setOnClickListener(::requestPermission)
     }
 
     private fun showScreenTitle(title: String) {
@@ -88,14 +92,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun showSearchDialog(view: View) = findNavController()
         .navigate(MainFragmentDirections.actionMainFragmentToMainDialog())
 
-    private fun registerForActivityResult() =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            viewModel.fetchNewForecastByLocation(isGranted)
-        }
-
     @Suppress("unused_parameter")
-    private fun requestPermission(activityResultLauncher: ActivityResultLauncher<String>) {
+    private fun requestPermission(view: View) {
         activityResultLauncher.launch(permission.ACCESS_FINE_LOCATION)
     }
+
 //endregion
+
 }
