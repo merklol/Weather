@@ -2,8 +2,10 @@ package com.maximapps.maxim_weather.mainScreen.di
 
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
-import com.maximapps.maxim_weather.mainScreen.data.DefaultWeatherRepository
-import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.data.repositories.DefaultLocationRepository
+import com.maximapps.maxim_weather.mainScreen.data.repositories.DefaultWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.repositories.LocationRepository
+import com.maximapps.maxim_weather.mainScreen.domain.repositories.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -21,4 +23,8 @@ interface MainModule {
     @Binds
     @Singleton
     fun bindsWeatherRepository(repository: DefaultWeatherRepository): WeatherRepository
+
+    @Binds
+    @Singleton
+    fun bindsLocationRepository(repository: DefaultLocationRepository): LocationRepository
 }
