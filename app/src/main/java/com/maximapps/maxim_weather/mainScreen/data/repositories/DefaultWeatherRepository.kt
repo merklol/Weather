@@ -1,9 +1,10 @@
-package com.maximapps.maxim_weather.mainScreen.data
+package com.maximapps.maxim_weather.mainScreen.data.repositories
 
-import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
+import com.maximapps.maxim_weather.mainScreen.data.ResponseMapper
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
-import com.maximapps.maxim_weather.mainScreen.domain.repositories.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.domain.repositories.WeatherRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
