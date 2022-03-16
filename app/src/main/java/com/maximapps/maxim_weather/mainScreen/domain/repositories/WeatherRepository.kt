@@ -1,6 +1,6 @@
-package com.maximapps.maxim_weather.mainScreen.domain
+package com.maximapps.maxim_weather.mainScreen.domain.repositories
 
-import com.maximapps.maxim_weather.mainScreen.data.lcation.Coordinates
+import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.core.Single
 
