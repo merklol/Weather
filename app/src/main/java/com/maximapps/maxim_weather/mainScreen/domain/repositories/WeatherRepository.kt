@@ -1,5 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.domain
 
+import com.maximapps.maxim_weather.mainScreen.data.lcation.Coordinates
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.core.Single
 
@@ -12,10 +13,10 @@ interface WeatherRepository {
     /**
      * Fetch weather forecast data with 3-hour step
      */
-    fun fetchForecast(cityName: String): Single<WeatherData>
+    fun fetchForecastByName(cityName: String): Single<WeatherData>
 
     /**
-     * Fetch weather forecast data with 3-hour step by device location
+     * Fetch weather forecast data with 3-hour step by device geographic coordinates
      */
-    fun fetchForecastByLocation(): Single<WeatherData>
+    fun fetchForecastByCoordinates(coordinates: Coordinates): Single<WeatherData>
 }

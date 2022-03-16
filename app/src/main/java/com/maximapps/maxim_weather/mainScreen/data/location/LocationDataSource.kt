@@ -6,6 +6,7 @@ import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.maximapps.maxim_weather.common.utils.asSingle
 import com.maximapps.maxim_weather.common.utils.millisecondsToHours
+import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
