@@ -4,7 +4,7 @@ import androidx.annotation.RequiresPermission
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByLocationUseCase
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinatesUseCase
 import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameUseCase
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val fetchForecastByNameUseCase: FetchForecastByNameUseCase,
-    private val fetchForecastByLocationUseCase: FetchForecastByLocationUseCase
+    private val fetchForecastByCoordinatesUseCase: FetchForecastByCoordinatesUseCase
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(
             _rationaleDialogVisibility.tryEmit(Unit)
             return
         }
-        fetchForecastByLocationUseCase()
+        fetchForecastByCoordinatesUseCase()
             .doOnSubscribe { _loaderVisibility.value = true }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onSuccess, ::onError)

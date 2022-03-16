@@ -7,7 +7,7 @@ import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class FetchForecastByLocationUseCase @Inject constructor(
+class FetchForecastByCoordinatesUseCase @Inject constructor(
     private val locationRepository: LocationRepository,
     private val weatherRepository: WeatherRepository
 ) {

@@ -3,7 +3,7 @@ package com.maximapps.maxim_weather.mainScreen.ui
 import app.cash.turbine.test
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByLocationUseCase
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinatesUseCase
 import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameUseCase
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
@@ -39,7 +39,7 @@ class MainViewModelTest {
     lateinit var fetchForecastByNameUseCase: FetchForecastByNameUseCase
 
     @MockK
-    lateinit var fetchForecastByLocationUseCase: FetchForecastByLocationUseCase
+    lateinit var fetchForecastByCoordinatesUseCase: FetchForecastByCoordinatesUseCase
 
     private lateinit var viewModel: MainViewModel
 
@@ -47,7 +47,7 @@ class MainViewModelTest {
     fun setup() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        viewModel = MainViewModel(fetchForecastByNameUseCase, fetchForecastByLocationUseCase)
+        viewModel = MainViewModel(fetchForecastByNameUseCase, fetchForecastByCoordinatesUseCase)
     }
 
     @After
@@ -78,7 +78,7 @@ class MainViewModelTest {
     @Test
     fun `when fetchNewForecastByLocation return data & permission is granted then should show a weather list`() =
         runTest {
-            every { fetchForecastByLocationUseCase() } returns Single.just(WeatherData())
+            every { fetchForecastByCoordinatesUseCase() } returns Single.just(WeatherData())
             viewModel.fetchNewForecastByLocation(true)
             assertThat(viewModel.weatherData.value, `is`(emptyList()))
         }
@@ -86,7 +86,7 @@ class MainViewModelTest {
     @Test
     fun `when fetchNewForecastByLocation return error & permission is granted then should show an error message`() =
         runTest {
-            every { fetchForecastByLocationUseCase() } returns Single.error(Exception())
+            every { fetchForecastByCoordinatesUseCase() } returns Single.error(Exception())
             launch {
                 viewModel.errorMessage.test {
                     viewModel.fetchNewForecastByLocation(true)
@@ -98,7 +98,7 @@ class MainViewModelTest {
     @Test
     fun `when permission is not granted then should show a rationale dialog`() =
         runTest {
-            every { fetchForecastByLocationUseCase() } returns Single.just(WeatherData())
+            every { fetchForecastByCoordinatesUseCase() } returns Single.just(WeatherData())
             launch {
                 viewModel.rationaleDialogVisibility.test {
                     viewModel.fetchNewForecastByLocation(false)
