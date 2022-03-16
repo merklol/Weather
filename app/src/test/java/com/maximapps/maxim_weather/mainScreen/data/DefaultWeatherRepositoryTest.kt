@@ -2,15 +2,15 @@ package com.maximapps.maxim_weather.mainScreen.data
 
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
-import com.maximapps.maxim_weather.mainScreen.domain.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.data.repositories.DefaultWeatherRepository
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherForecast
+import com.maximapps.maxim_weather.mainScreen.domain.repositories.WeatherRepository
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import com.maximapps.maxim_weather.utils.readFileFromResources
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
-import io.mockk.mockk
 import io.reactivex.rxjava3.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -22,7 +22,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers
-import org.mockito.Mock
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
@@ -50,7 +49,6 @@ class DefaultWeatherRepositoryTest {
             DefaultWeatherRepository(
                 api,
                 ResponseMapper(iconMapper, ForecastMapper(iconMapper)),
-                mockk()
             )
     }
 
@@ -89,7 +87,7 @@ class DefaultWeatherRepositoryTest {
                 )
             )
         )
-        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecastByName(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue(expected)
 
     }
@@ -101,7 +99,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecastByName(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherCondition == Undefined
         }
@@ -114,7 +112,7 @@ class DefaultWeatherRepositoryTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.fetchForecast(ArgumentMatchers.anyString()).subscribe(testObserver)
+        repository.fetchForecastByName(ArgumentMatchers.anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherIcon == R.mipmap.few_clouds
         }
