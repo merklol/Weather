@@ -54,9 +54,4 @@ class AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
-
-    @Provides
-    @Singleton
-    fun providesFusedLocationProviderClient(context: Context) =
-        LocationServices.getFusedLocationProviderClient(context)
 }
