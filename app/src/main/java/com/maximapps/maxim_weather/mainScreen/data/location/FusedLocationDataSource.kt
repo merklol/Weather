@@ -1,19 +1,24 @@
 package com.maximapps.maxim_weather.mainScreen.data.location
 
+import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.maximapps.maxim_weather.common.utils.asSingle
 import com.maximapps.maxim_weather.common.utils.millisecondsToHours
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class LocationDataSource @Inject constructor(private val client: FusedLocationProviderClient) {
+/**
+ * Implementations of [LocationDataSource] interface using FusedLocationProviderClient.
+ */
+class FusedLocationDataSource @Inject constructor(context: Context) : LocationDataSource {
+    private val client = LocationServices.getFusedLocationProviderClient(context)
     private val cancellationTokenSource = CancellationTokenSource()
 
     @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
-    fun getLocation(): Single<Location> = client.lastLocation
+    override fun getLocation(): Single<Location> = client.lastLocation
         .asSingle(cancellationTokenSource)
         .filter { (System.currentTimeMillis() - it.time).millisecondsToHours() <= 1 }
         .switchIfEmpty(getCurrentLocation())
