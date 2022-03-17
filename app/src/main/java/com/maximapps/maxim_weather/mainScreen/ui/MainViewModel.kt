@@ -4,20 +4,24 @@ import androidx.annotation.RequiresPermission
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinatesUseCase
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameUseCase
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinates
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameImpl
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByName
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Named
 
 class MainViewModel @Inject constructor(
-    private val fetchForecastByNameUseCase: FetchForecastByNameUseCase,
-    private val fetchForecastByCoordinatesUseCase: FetchForecastByCoordinatesUseCase
+    @Named("FetchForecastByName")
+    private val fetchForecastByName: FetchForecastByName,
+    @Named("FetchForecastByCoordinates")
+    private val fetchForecastByCoordinates: FetchForecastByCoordinates
 ) : ViewModel() {
     private var isFirstLaunch = true
     private val disposables = CompositeDisposable()
@@ -43,7 +47,7 @@ class MainViewModel @Inject constructor(
             _rationaleDialogVisibility.tryEmit(Unit)
             return
         }
-        fetchForecastByCoordinatesUseCase()
+        fetchForecastByCoordinates()
             .doOnSubscribe { _loaderVisibility.value = true }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onSuccess, ::onError)
@@ -51,7 +55,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun fetchNewForecast(cityName: String) {
-        fetchForecastByNameUseCase(cityName)
+        fetchForecastByName(FetchForecastByNameImpl.Params(cityName))
             .doOnSubscribe { _loaderVisibility.value = true }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onSuccess, ::onError)
