@@ -3,11 +3,11 @@ package com.maximapps.maxim_weather.mainScreen.ui
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
-import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinates
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByName
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameImpl
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
+import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow

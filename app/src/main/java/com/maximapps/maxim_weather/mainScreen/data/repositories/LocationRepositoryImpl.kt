@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Default implementation of the [LocationRepository] interface.
  */
-class DefaultLocationRepository @Inject constructor(
+class LocationRepositoryImpl @Inject constructor(
     private val dataSource: LocationDataSource
 ) : LocationRepository {
 

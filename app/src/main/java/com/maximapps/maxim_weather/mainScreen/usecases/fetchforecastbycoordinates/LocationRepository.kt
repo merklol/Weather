@@ -1,6 +1,5 @@
-package com.maximapps.maxim_weather.mainScreen.domain.repositories
+package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates
 
-import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
 import io.reactivex.rxjava3.core.Single
 
 /**

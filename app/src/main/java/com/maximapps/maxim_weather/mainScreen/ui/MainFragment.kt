@@ -17,7 +17,7 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
 import com.maximapps.maxim_weather.common.utils.observe
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
-import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.GenericItem

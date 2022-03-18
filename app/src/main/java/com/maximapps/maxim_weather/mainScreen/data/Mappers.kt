@@ -6,10 +6,10 @@ import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.common.utils.capitalized
 import com.maximapps.maxim_weather.mainScreen.data.network.ForecastEntity
 import com.maximapps.maxim_weather.mainScreen.data.network.Response
-import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherForecast
-import com.maximapps.maxim_weather.mainScreen.domain.models.Undefined
-import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
+import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
