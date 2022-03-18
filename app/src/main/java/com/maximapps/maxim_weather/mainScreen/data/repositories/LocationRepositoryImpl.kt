@@ -2,8 +2,8 @@ package com.maximapps.maxim_weather.mainScreen.data.repositories
 
 import androidx.annotation.RequiresPermission
 import com.maximapps.maxim_weather.mainScreen.data.location.LocationDataSource
-import com.maximapps.maxim_weather.mainScreen.domain.models.Coordinates
-import com.maximapps.maxim_weather.mainScreen.domain.repositories.LocationRepository
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.Coordinates
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.LocationRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject

@@ -2,9 +2,9 @@ package com.maximapps.maxim_weather.mainScreen.ui
 
 import app.cash.turbine.test
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinates
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
