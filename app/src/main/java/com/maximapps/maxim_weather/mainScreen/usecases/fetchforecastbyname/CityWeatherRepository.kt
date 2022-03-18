@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates
+package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname
 
 import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import io.reactivex.rxjava3.core.Single
@@ -8,9 +8,9 @@ import io.reactivex.rxjava3.core.Single
  *
  * @see <a href="https://openweathermap.org/forecast5#5days">5 day / 3 hour forecast data</a>
  */
-interface LocationWeatherRepository {
+interface CityWeatherRepository {
     /**
-     * Fetch weather forecast data with 3-hour step by device geographic coordinates
+     * Fetch weather forecast data with 3-hour step
      */
-    fun fetchForecastByCoordinates(coordinates: Coordinates): Single<WeatherData>
+    fun fetchForecastByName(cityName: String): Single<WeatherData>
 }
