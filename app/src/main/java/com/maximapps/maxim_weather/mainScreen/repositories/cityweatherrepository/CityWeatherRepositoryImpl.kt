@@ -1,7 +1,7 @@
-package com.maximapps.maxim_weather.mainScreen.data.repositories
+package com.maximapps.maxim_weather.mainScreen.repositories.cityweatherrepository
 
-import com.maximapps.maxim_weather.mainScreen.data.ResponseMapper
-import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.ResponseMapper
+import com.maximapps.maxim_weather.mainScreen.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
 import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import io.reactivex.rxjava3.core.Single

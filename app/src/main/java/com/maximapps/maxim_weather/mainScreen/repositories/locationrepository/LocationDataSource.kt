@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.data.location
+package com.maximapps.maxim_weather.mainScreen.repositories.locationrepository
 
 import io.reactivex.rxjava3.core.Single
 

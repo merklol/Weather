@@ -2,11 +2,11 @@ package com.maximapps.maxim_weather.mainScreen.di
 
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
-import com.maximapps.maxim_weather.mainScreen.data.location.FusedLocationDataSource
-import com.maximapps.maxim_weather.mainScreen.data.location.LocationDataSource
-import com.maximapps.maxim_weather.mainScreen.data.repositories.CityWeatherRepositoryImpl
-import com.maximapps.maxim_weather.mainScreen.data.repositories.LocationRepositoryImpl
-import com.maximapps.maxim_weather.mainScreen.data.repositories.LocationWeatherRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.location.FusedLocationDataSource
+import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationDataSource
+import com.maximapps.maxim_weather.mainScreen.repositories.cityweatherrepository.CityWeatherRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.repositories.locationweatherrepository.LocationWeatherRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinatesImpl

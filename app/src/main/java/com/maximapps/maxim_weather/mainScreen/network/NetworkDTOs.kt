@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.data.network
+package com.maximapps.maxim_weather.mainScreen.network
 
 import com.google.gson.annotations.SerializedName
 import java.util.Calendar

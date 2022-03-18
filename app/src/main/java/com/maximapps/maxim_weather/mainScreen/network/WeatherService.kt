@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.data.network
+package com.maximapps.maxim_weather.mainScreen.network
 
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET

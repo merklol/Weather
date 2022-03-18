@@ -1,11 +1,11 @@
-package com.maximapps.maxim_weather.mainScreen.data
+package com.maximapps.maxim_weather.mainScreen
 
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.IconTypes
 import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.common.utils.capitalized
-import com.maximapps.maxim_weather.mainScreen.data.network.ForecastEntity
-import com.maximapps.maxim_weather.mainScreen.data.network.Response
+import com.maximapps.maxim_weather.mainScreen.network.ForecastEntity
+import com.maximapps.maxim_weather.mainScreen.network.Response
 import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined

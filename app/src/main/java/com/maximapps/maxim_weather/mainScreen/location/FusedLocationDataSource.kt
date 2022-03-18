@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.data.location
+package com.maximapps.maxim_weather.mainScreen.location
 
 import android.content.Context
 import androidx.annotation.RequiresPermission
@@ -7,6 +7,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.maximapps.maxim_weather.common.utils.asSingle
 import com.maximapps.maxim_weather.common.utils.millisecondsToHours
+import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.Location
+import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationDataSource
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 

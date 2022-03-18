@@ -1,8 +1,11 @@
-package com.maximapps.maxim_weather.mainScreen.data
+package com.maximapps.maxim_weather.mainScreen.repositories
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.mainScreen.data.network.WeatherService
-import com.maximapps.maxim_weather.mainScreen.data.repositories.CityWeatherRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.ForecastMapper
+import com.maximapps.maxim_weather.mainScreen.IconMapper
+import com.maximapps.maxim_weather.mainScreen.ResponseMapper
+import com.maximapps.maxim_weather.mainScreen.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.repositories.cityweatherrepository.CityWeatherRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
 import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
