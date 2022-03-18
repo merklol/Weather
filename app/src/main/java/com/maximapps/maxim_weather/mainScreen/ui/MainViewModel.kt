@@ -1,14 +1,13 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
-import androidx.annotation.RequiresPermission
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
 import com.maximapps.maxim_weather.mainScreen.domain.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.domain.models.WeatherData
 import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinates
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameImpl
 import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameImpl
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +40,7 @@ class MainViewModel @Inject constructor(
     private val _rationaleDialogVisibility = MutableSingleEventFlow<Unit>()
     val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
 
-    @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
+
     fun fetchNewForecastByLocation(isGranted: Boolean) {
         if (!isGranted) {
             _rationaleDialogVisibility.tryEmit(Unit)
