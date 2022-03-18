@@ -4,15 +4,17 @@ import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
 import com.maximapps.maxim_weather.mainScreen.data.location.FusedLocationDataSource
 import com.maximapps.maxim_weather.mainScreen.data.location.LocationDataSource
-import com.maximapps.maxim_weather.mainScreen.data.repositories.DefaultLocationRepository
-import com.maximapps.maxim_weather.mainScreen.data.repositories.DefaultWeatherRepository
-import com.maximapps.maxim_weather.mainScreen.domain.repositories.LocationRepository
-import com.maximapps.maxim_weather.mainScreen.domain.repositories.WeatherRepository
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinatesImpl
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByCoordinates
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByNameImpl
-import com.maximapps.maxim_weather.mainScreen.domain.usecases.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.data.repositories.CityWeatherRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.data.repositories.LocationRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.data.repositories.LocationWeatherRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinatesImpl
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.LocationRepository
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.LocationWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -33,10 +35,14 @@ interface MainModule {
 
     @Binds
     @Singleton
-    fun bindsWeatherRepository(repository: DefaultWeatherRepository): WeatherRepository
+    fun bindsLocationWeatherRepository(repository: LocationWeatherRepositoryImpl): LocationWeatherRepository
 
     @Binds
-    fun bindsLocationRepository(repository: DefaultLocationRepository): LocationRepository
+    @Singleton
+    fun bindsCityWeatherRepository(repository: CityWeatherRepositoryImpl): CityWeatherRepository
+
+    @Binds
+    fun bindsLocationRepository(repository: LocationRepositoryImpl): LocationRepository
 
     @Binds
     @Named("FetchForecastByName")
