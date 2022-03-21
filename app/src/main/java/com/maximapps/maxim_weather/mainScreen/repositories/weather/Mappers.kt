@@ -1,15 +1,15 @@
-package com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository
+package com.maximapps.maxim_weather.mainScreen.repositories.weather
 
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.IconTypes
 import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.common.utils.capitalized
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.ForecastEntity
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.Response
-import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.Forecast
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.Response
+import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.UNDEFINED
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherForecast
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class ResponseMapper @Inject constructor(
                     temperatureMax = item.value.maxOf { it.main.tempMax }.roundToInt(),
                     wind = wind.speed.roundToInt(),
                     feelsLike = main.feelsLike.roundToInt(),
-                    weatherCondition = weatherData?.description?.capitalized ?: Undefined,
+                    weatherCondition = weatherData?.description?.capitalized ?: UNDEFINED,
                     weatherIcon = weatherData?.let { iconMapper.map(it.icon) }
                         ?: R.mipmap.few_clouds,
                     forecastList = item.value.map { forecast -> forecastMapper.map(forecast) }
@@ -46,12 +46,12 @@ class ResponseMapper @Inject constructor(
 }
 
 /**
- * Map a [ForecastEntity] to a [WeatherForecast] instance from the Domain layer.
+ * Map a [Forecast] to a [WeatherForecast] instance from the Domain layer.
  */
 class ForecastMapper @Inject constructor(
     private val mapper: IconMapper
-) : Mapper<ForecastEntity, WeatherForecast> {
-    override fun map(input: ForecastEntity) = with(input) {
+) : Mapper<Forecast, WeatherForecast> {
+    override fun map(input: Forecast) = with(input) {
         WeatherForecast(
             Date(TimeUnit.SECONDS.toMillis(dt)),
             main.temp.roundToInt(),
