@@ -12,7 +12,7 @@ class FetchForecastByNameImpl @Inject constructor(
 ) : FetchForecastByName {
     override operator fun invoke(params: Params?): Single<WeatherData> = when (params) {
         null -> Single.error(IllegalArgumentException("Parameter city name can't be null."))
-        else -> cityWeatherRepository.fetchForecastByName(params.cityName)
+        else -> cityWeatherRepository.fetchWeatherForecast(params.cityName)
     }
 
     data class Params(

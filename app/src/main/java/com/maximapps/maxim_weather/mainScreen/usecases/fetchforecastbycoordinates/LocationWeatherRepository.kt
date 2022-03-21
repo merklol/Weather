@@ -12,5 +12,5 @@ interface LocationWeatherRepository {
     /**
      * Fetch weather forecast data with 3-hour step by device geographic coordinates
      */
-    fun fetchForecastByCoordinates(coordinates: Coordinates): Single<WeatherData>
+    fun fetchWeatherForecast(coordinates: Coordinates): Single<WeatherData>
 }

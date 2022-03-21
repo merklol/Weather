@@ -2,11 +2,10 @@ package com.maximapps.maxim_weather.mainScreen.di
 
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
-import com.maximapps.maxim_weather.mainScreen.location.FusedLocationDataSource
+import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.location.FusedLocationDataSource
 import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationDataSource
-import com.maximapps.maxim_weather.mainScreen.repositories.cityweatherrepository.CityWeatherRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationRepositoryImpl
-import com.maximapps.maxim_weather.mainScreen.repositories.locationweatherrepository.LocationWeatherRepositoryImpl
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinatesImpl
@@ -35,11 +34,11 @@ interface MainModule {
 
     @Binds
     @Singleton
-    fun bindsLocationWeatherRepository(repository: LocationWeatherRepositoryImpl): LocationWeatherRepository
+    fun bindsLocationWeatherRepository(repository: WeatherRepository): LocationWeatherRepository
 
     @Binds
     @Singleton
-    fun bindsCityWeatherRepository(repository: CityWeatherRepositoryImpl): CityWeatherRepository
+    fun bindsCityWeatherRepository(repository: WeatherRepository): CityWeatherRepository
 
     @Binds
     fun bindsLocationRepository(repository: LocationRepositoryImpl): LocationRepository

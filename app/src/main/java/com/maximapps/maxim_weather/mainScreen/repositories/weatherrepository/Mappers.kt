@@ -1,15 +1,15 @@
-package com.maximapps.maxim_weather.mainScreen
+package com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository
 
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.IconTypes
 import com.maximapps.maxim_weather.common.Mapper
 import com.maximapps.maxim_weather.common.utils.capitalized
-import com.maximapps.maxim_weather.mainScreen.network.ForecastEntity
-import com.maximapps.maxim_weather.mainScreen.network.Response
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.ForecastEntity
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.Response
 import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -36,7 +36,8 @@ class ResponseMapper @Inject constructor(
                     wind = wind.speed.roundToInt(),
                     feelsLike = main.feelsLike.roundToInt(),
                     weatherCondition = weatherData?.description?.capitalized ?: Undefined,
-                    weatherIcon = weatherData?.let { iconMapper.map(it.icon) } ?: R.mipmap.few_clouds,
+                    weatherIcon = weatherData?.let { iconMapper.map(it.icon) }
+                        ?: R.mipmap.few_clouds,
                     forecastList = item.value.map { forecast -> forecastMapper.map(forecast) }
                 )
             }

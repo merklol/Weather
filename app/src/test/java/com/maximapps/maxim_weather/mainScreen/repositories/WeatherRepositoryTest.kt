@@ -1,13 +1,12 @@
 package com.maximapps.maxim_weather.mainScreen.repositories
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.mainScreen.ForecastMapper
-import com.maximapps.maxim_weather.mainScreen.IconMapper
-import com.maximapps.maxim_weather.mainScreen.ResponseMapper
-import com.maximapps.maxim_weather.mainScreen.network.WeatherService
-import com.maximapps.maxim_weather.mainScreen.repositories.locationweatherrepository.LocationWeatherRepositoryImpl
-import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.Coordinates
-import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.LocationWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.ForecastMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.IconMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.ResponseMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
 import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
 import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
@@ -25,13 +24,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.ArgumentMatchers.anyString
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @RunWith(JUnit4::class)
-class LocationWeatherRepositoryImplTest {
+class WeatherRepositoryTest {
     @get:Rule
     var testScheduler = RxImmediateSchedulerRule()
     private val webServer = MockWebServer()
@@ -43,14 +43,13 @@ class LocationWeatherRepositoryImplTest {
         .build()
         .create(WeatherService::class.java)
 
-    private lateinit var repository: LocationWeatherRepository
-    private val coordinates = Coordinates(0.0, 0.0)
+    private lateinit var repository: CityWeatherRepository
 
     @Before
     fun setup() {
         val iconMapper = IconMapper()
         repository =
-            LocationWeatherRepositoryImpl(
+            WeatherRepository(
                 api,
                 ResponseMapper(iconMapper, ForecastMapper(iconMapper)),
             )
@@ -91,8 +90,9 @@ class LocationWeatherRepositoryImplTest {
                 )
             )
         )
-        repository.fetchForecastByCoordinates(coordinates).subscribe(testObserver)
+        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
         testObserver.assertValue(expected)
+
     }
 
     @Test
@@ -102,7 +102,7 @@ class LocationWeatherRepositoryImplTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.fetchForecastByCoordinates(coordinates).subscribe(testObserver)
+        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherCondition == Undefined
         }
@@ -115,7 +115,7 @@ class LocationWeatherRepositoryImplTest {
         webServer.enqueue(
             MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
         )
-        repository.fetchForecastByCoordinates(coordinates).subscribe(testObserver)
+        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
         testObserver.assertValue {
             it.detailedForecast[0].weatherIcon == R.mipmap.few_clouds
         }

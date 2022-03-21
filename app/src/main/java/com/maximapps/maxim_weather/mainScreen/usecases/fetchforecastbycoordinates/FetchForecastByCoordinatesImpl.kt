@@ -16,5 +16,5 @@ class FetchForecastByCoordinatesImpl @Inject constructor(
     @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
     override operator fun invoke(params: Nothing?): Single<WeatherData> = locationRepository
         .getLocation()
-        .flatMap(locationWeatherRepository::fetchForecastByCoordinates)
+        .flatMap(locationWeatherRepository::fetchWeatherForecast)
 }

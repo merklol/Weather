@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.location
+package com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.location
 
 import android.content.Context
 import androidx.annotation.RequiresPermission
