@@ -3,11 +3,13 @@ package com.maximapps.maxim_weather.mainScreen.ui
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
+import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FETCH_FORECAST_BY_COORDINATES
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FETCH_FORECAST_BY_NAME
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
-import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,9 +19,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class MainViewModel @Inject constructor(
-    @Named("FetchForecastByName")
+    @Named(FETCH_FORECAST_BY_NAME)
     private val fetchForecastByName: FetchForecastByName,
-    @Named("FetchForecastByCoordinates")
+    @Named(FETCH_FORECAST_BY_COORDINATES)
     private val fetchForecastByCoordinates: FetchForecastByCoordinates
 ) : ViewModel() {
     private var isFirstLaunch = true

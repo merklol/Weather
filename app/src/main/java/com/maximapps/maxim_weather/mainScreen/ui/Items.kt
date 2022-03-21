@@ -8,8 +8,8 @@ import com.maximapps.maxim_weather.common.utils.toFormattedTime
 import com.maximapps.maxim_weather.databinding.ListItemViewDetailedForecastBinding
 import com.maximapps.maxim_weather.databinding.ListItemViewTodayForecastBinding
 import com.maximapps.maxim_weather.databinding.ListItemViewWeatherForecastBinding
-import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherForecast
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
