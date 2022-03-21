@@ -1,6 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname
 
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
 import io.reactivex.rxjava3.core.Single
 
 /**

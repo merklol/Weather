@@ -1,9 +1,9 @@
-package com.maximapps.maxim_weather.mainScreen.usecases.models
+package com.maximapps.maxim_weather.mainScreen.usecases.common
 
 import androidx.annotation.DrawableRes
 import java.util.Date
 
-const val Undefined = "undefined"
+const val UNDEFINED = "undefined"
 
 data class DetailedForecast(
     val date: Date,
