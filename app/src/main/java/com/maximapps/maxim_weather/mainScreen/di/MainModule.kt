@@ -2,8 +2,6 @@ package com.maximapps.maxim_weather.mainScreen.di
 
 import androidx.lifecycle.ViewModel
 import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
-import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.location.FusedLocationDataSource
-import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationDataSource
 import com.maximapps.maxim_weather.mainScreen.repositories.locationrepository.LocationRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
@@ -27,10 +25,6 @@ interface MainModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
-
-    @Binds
-    @Singleton
-    fun bindsLocationDataSource(repository: FusedLocationDataSource): LocationDataSource
 
     @Binds
     @Singleton
