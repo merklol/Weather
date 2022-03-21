@@ -1,16 +1,16 @@
 package com.maximapps.maxim_weather.mainScreen.repositories
 
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.ForecastMapper
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.IconMapper
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.ResponseMapper
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.WeatherService
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.WeatherRepository
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.ForecastMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.IconMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.ResponseMapper
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.WeatherRepository
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
-import com.maximapps.maxim_weather.mainScreen.usecases.models.DetailedForecast
-import com.maximapps.maxim_weather.mainScreen.usecases.models.Undefined
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherData
-import com.maximapps.maxim_weather.mainScreen.usecases.models.WeatherForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
+import com.maximapps.maxim_weather.mainScreen.usecases.common.UNDEFINED
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
+import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherForecast
 import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
 import com.maximapps.maxim_weather.utils.readFileFromResources
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -104,7 +104,7 @@ class WeatherRepositoryTest {
         )
         repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
         testObserver.assertValue {
-            it.detailedForecast[0].weatherCondition == Undefined
+            it.detailedForecast[0].weatherCondition == UNDEFINED
         }
     }
 
