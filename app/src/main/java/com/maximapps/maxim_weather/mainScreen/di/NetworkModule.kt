@@ -1,6 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.di
 
-import com.maximapps.maxim_weather.mainScreen.repositories.weatherrepository.network.WeatherService
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.WeatherService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
