@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.domain.models
+package com.maximapps.maxim_weather.mainScreen.usecases.common
 
 import androidx.annotation.DrawableRes
 import java.util.Date

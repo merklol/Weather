@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.data.network
+package com.maximapps.maxim_weather.mainScreen.repositories.weather.network
 
 import com.google.gson.annotations.SerializedName
 import java.util.Calendar
@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit
 data class Response(
     val cod: String,
     val message: String,
-    val city: CityEntity,
+    val city: City,
     @SerializedName("list")
-    val forecastList: List<ForecastEntity>
+    val forecastList: List<Forecast>
 ) {
     fun groupByDate() = forecastList.groupBy {
         with(Calendar.getInstance()) {
@@ -26,11 +26,11 @@ data class Response(
 /**
  * City information
  */
-data class CityEntity(
+data class City(
     val id: Int,
     val name: String,
     @SerializedName("coord")
-    val coordinates: CoordinatesEntity,
+    val coordinates: Coordinates,
     val country: String,
     val timezone: Int,
     val sunrise: Int,
@@ -40,21 +40,21 @@ data class CityEntity(
 /**
  * City geo location.
  */
-data class CoordinatesEntity(val lat: Double, val lon: Double)
+data class Coordinates(val lat: Double, val lon: Double)
 
 /**
  * Forecast data
  */
-data class ForecastEntity(
+data class Forecast(
     val dt: Long,
-    val main: MainEntity,
-    val weather: List<WeatherEntity>,
-    val clouds: CloudsEntity,
-    val wind: WindEntity,
+    val main: Main,
+    val weather: List<Weather>,
+    val clouds: Clouds,
+    val wind: Wind,
     val visibility: Int,
     val pop: Double,
-    val rain: RainEntity?,
-    val sys: SysEntity,
+    val rain: Rain?,
+    val sys: Sys,
     @SerializedName("dt_txt")
     val dtTxt: String
 )
@@ -62,7 +62,7 @@ data class ForecastEntity(
 /**
  * Main weather information
  */
-data class MainEntity(
+data class Main(
     val temp: Double,
     @SerializedName("feels_like")
     val feelsLike: Double,
@@ -83,7 +83,7 @@ data class MainEntity(
 /**
  * Weather condition
  */
-data class WeatherEntity(
+data class Weather(
     val id: Int,
     val main: String,
     val description: String,
@@ -93,12 +93,12 @@ data class WeatherEntity(
 /**
  * Cloudiness in percent.
  */
-data class CloudsEntity(val all: Int)
+data class Clouds(val all: Int)
 
 /**
  * Rain volume for last 3 hours.
  */
-data class RainEntity(
+data class Rain(
     @SerializedName("3h")
     val threeHour: Double
 )
@@ -106,9 +106,9 @@ data class RainEntity(
 /**
  * Wind speed, direction in degree and gust.
  */
-data class WindEntity(val speed: Double, val deg: Int, val gust: Double)
+data class Wind(val speed: Double, val deg: Int, val gust: Double)
 
 /**
  *  Part of the day (n - night, d - day)
  */
-data class SysEntity(val pod: String)
+data class Sys(val pod: String)

@@ -1,4 +1,4 @@
-package com.maximapps.maxim_weather.mainScreen.domain.models
+package com.maximapps.maxim_weather.mainScreen.usecases.common
 
 data class WeatherData(
     val cityName: String = "",
