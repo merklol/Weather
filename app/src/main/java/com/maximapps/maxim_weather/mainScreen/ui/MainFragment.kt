@@ -45,11 +45,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         AndroidSupportInjection.inject(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchForecast("Shanghai")
+    }
+
     //region Initialization
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchForecast("Shanghai")
         binding.weatherList.itemAnimator = null
         binding.weatherList.adapter = fastAdapter
         with(viewModel) {
