@@ -4,120 +4,103 @@ import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.mainScreen.repositories.weather.ForecastMapper
 import com.maximapps.maxim_weather.mainScreen.repositories.weather.IconMapper
 import com.maximapps.maxim_weather.mainScreen.repositories.weather.ResponseMapper
-import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.repositories.weather.WeatherRepository
-import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.Response
+import com.maximapps.maxim_weather.mainScreen.repositories.weather.network.WeatherService
 import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
 import com.maximapps.maxim_weather.mainScreen.usecases.common.UNDEFINED
 import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
 import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherForecast
-import com.maximapps.maxim_weather.utils.RxImmediateSchedulerRule
-import com.maximapps.maxim_weather.utils.readFileFromResources
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
-import io.reactivex.rxjava3.observers.TestObserver
-import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
+import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.CityWeatherRepository
+import com.maximapps.maxim_weather.utils.readJsonFileToObject
+import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.ArgumentMatchers.anyString
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @RunWith(JUnit4::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class WeatherRepositoryTest {
-    @get:Rule
-    var testScheduler = RxImmediateSchedulerRule()
-    private val webServer = MockWebServer()
-    private val api = Retrofit.Builder()
-        .baseUrl(webServer.url("/"))
-        .client(OkHttpClient.Builder().build())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(WeatherService::class.java)
-
+    @MockK
+    lateinit var weatherService: WeatherService
     private lateinit var repository: CityWeatherRepository
 
     @Before
     fun setup() {
+        MockKAnnotations.init(this)
         val iconMapper = IconMapper()
-        repository =
-            WeatherRepository(
-                api,
-                ResponseMapper(iconMapper, ForecastMapper(iconMapper)),
-            )
+        val responseMapper = ResponseMapper(iconMapper, ForecastMapper(iconMapper))
+        repository = WeatherRepository(weatherService, responseMapper)
     }
 
     @After
     fun tearDown() {
-        webServer.shutdown()
+        clearAllMocks()
     }
 
     @Test
-    fun `when response is correct should map it to domain models with correctly formatted values`() {
-        val json = "api-response/forecast_response.json"
-        val testObserver = TestObserver<WeatherData>()
-        webServer.enqueue(
-            MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
-        )
-        val expected = WeatherData(
-            cityName = "Moscow", detailedForecast = listOf(
-                DetailedForecast(
-                    date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
-                    temperature = -1,
-                    temperatureMin = -1,
-                    temperatureMax = -1,
-                    wind = 2,
-                    weatherCondition = "Overcast clouds",
-                    feelsLike = -3,
-                    weatherIcon = R.mipmap.few_clouds,
-                    forecastList = listOf(
-                        WeatherForecast(
-                            date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
-                            temperature = -1,
-                            minTemperature = -1,
-                            maxTemperature = -1,
-                            weatherIcon = R.mipmap.few_clouds
+    fun `when response is correct should map it to domain models with correctly formatted values`() =
+        runTest {
+            val json = "api-response/forecast_response.json"
+            val response = javaClass.readJsonFileToObject(json, Response::class.java)
+            coEvery { weatherService.fetchWeatherForecast(any()) } returns response
+
+            val expected = WeatherData(
+                cityName = "Moscow", detailedForecast = listOf(
+                    DetailedForecast(
+                        date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
+                        temperature = -1,
+                        temperatureMin = -1,
+                        temperatureMax = -1,
+                        wind = 2,
+                        weatherCondition = "Overcast clouds",
+                        feelsLike = -3,
+                        weatherIcon = R.mipmap.few_clouds,
+                        forecastList = listOf(
+                            WeatherForecast(
+                                date = Date(TimeUnit.SECONDS.toMillis(1645920000)),
+                                temperature = -1,
+                                minTemperature = -1,
+                                maxTemperature = -1,
+                                weatherIcon = R.mipmap.few_clouds
+                            )
                         )
                     )
                 )
             )
-        )
-        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
-        testObserver.assertValue(expected)
-
-    }
+            assertThat(repository.fetchWeatherForecast("Moscow").first(), `is`(expected))
+        }
 
     @Test
-    fun `when response does not contain weather data return weather condition as undefined`() {
-        val json = "api-response/forecast_response_without_weather_data.json"
-        val testObserver = TestObserver<WeatherData>()
-        webServer.enqueue(
-            MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
-        )
-        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
-        testObserver.assertValue {
-            it.detailedForecast[0].weatherCondition == UNDEFINED
+    fun `when response does not contain weather data return weather condition as undefined`() =
+        runTest {
+            val json = "api-response/forecast_response_without_weather_data.json"
+            val response = javaClass.readJsonFileToObject(json, Response::class.java)
+            coEvery { weatherService.fetchWeatherForecast(any()) } returns response
+
+            val result = repository.fetchWeatherForecast("Shanghai").first()
+            assertThat(result.detailedForecast.first().weatherCondition, `is`(UNDEFINED))
         }
-    }
 
     @Test
-    fun `when response does not contain weather data return default icon type`() {
+    fun `when response does not contain weather data return default icon type`() = runTest {
         val json = "api-response/forecast_response_without_weather_data.json"
-        val testObserver = TestObserver<WeatherData>()
-        webServer.enqueue(
-            MockResponse().setBody(javaClass.classLoader.readFileFromResources(json))
-        )
-        repository.fetchWeatherForecast(anyString()).subscribe(testObserver)
-        testObserver.assertValue {
-            it.detailedForecast[0].weatherIcon == R.mipmap.few_clouds
-        }
+        val response = javaClass.readJsonFileToObject(json, Response::class.java)
+        coEvery { weatherService.fetchWeatherForecast(any()) } returns response
+
+        val result = repository.fetchWeatherForecast("Shanghai").first()
+        assertThat(result.detailedForecast.first().weatherIcon, `is`(R.mipmap.few_clouds))
     }
 }
