@@ -2,11 +2,9 @@ package com.maximapps.maxim_weather.common.di
 
 import android.app.Application
 import android.content.Context
-import com.google.android.gms.location.LocationServices
 import com.maximapps.maxim_weather.BuildConfig
 import dagger.Module
 import dagger.Provides
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,9 +31,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().also {
-        it.level = HttpLoggingInterceptor.Level.BODY
-    }
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().also { it.level = HttpLoggingInterceptor.Level.BODY }
 
     @Provides
     @Singleton
@@ -50,7 +47,6 @@ class AppModule {
     @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.openweathermap.org/data/2.5/")
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
