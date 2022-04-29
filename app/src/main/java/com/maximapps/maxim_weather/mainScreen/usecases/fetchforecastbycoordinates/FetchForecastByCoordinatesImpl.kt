@@ -1,22 +1,25 @@
 package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates
 
 import androidx.annotation.RequiresPermission
-import com.maximapps.maxim_weather.common.SingleUseCase
+import com.maximapps.maxim_weather.common.FlowUseCase
 import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
 import javax.inject.Inject
 
-typealias FetchForecastByCoordinates = SingleUseCase<Nothing, WeatherData>
+typealias FetchForecastByCoordinates = FlowUseCase<Nothing, WeatherData>
 
 const val FETCH_FORECAST_BY_COORDINATES = "fetch_forecast_by_coordinates"
 
+@OptIn(FlowPreview::class)
 class FetchForecastByCoordinatesImpl @Inject constructor(
     private val locationRepository: LocationRepository,
     private val locationWeatherRepository: LocationWeatherRepository
 ) : FetchForecastByCoordinates {
 
     @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
-    override operator fun invoke(params: Nothing?): Single<WeatherData> = locationRepository
+    override operator fun invoke(params: Nothing?): Flow<WeatherData> = locationRepository
         .getLocation()
-        .flatMap(locationWeatherRepository::fetchWeatherForecast)
+        .flatMapConcat(locationWeatherRepository::fetchWeatherForecast)
 }
