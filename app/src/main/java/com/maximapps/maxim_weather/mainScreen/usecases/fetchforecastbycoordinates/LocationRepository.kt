@@ -1,6 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates
 
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Interface defining methods for getting device location.
@@ -9,5 +9,5 @@ interface LocationRepository {
     /**
      * Provides device geographic coordinates.
      */
-    fun getLocation(): Single<Coordinates>
+    fun getLocation(): Flow<Coordinates>
 }

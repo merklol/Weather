@@ -52,6 +52,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.RequiresOptIn")
+    }
 }
 
 dependencies {
@@ -87,11 +90,6 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:2.40.5")
     kapt("com.google.dagger:dagger-android-processor:2.40.5")
 
-    //RxJava
-    implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation("io.reactivex.rxjava3:rxjava:3.0.0")
-    implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
-
     //Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
@@ -100,13 +98,6 @@ dependencies {
 
     //MocKK
     testImplementation("io.mockk:mockk:1.12.2")
-
-    //Mockk Webserver
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-
-    //Turbine
-    testImplementation("app.cash.turbine:turbine:0.7.0")
 
     //Coroutines Test Package
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")

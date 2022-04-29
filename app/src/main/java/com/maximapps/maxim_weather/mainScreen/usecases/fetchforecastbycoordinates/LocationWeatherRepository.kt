@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates
 
 import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Interface defining a method for fetching weather forecast data with 3-hour step.
@@ -12,5 +12,5 @@ interface LocationWeatherRepository {
     /**
      * Fetch weather forecast data with 3-hour step by device geographic coordinates
      */
-    fun fetchWeatherForecast(coordinates: Coordinates): Single<WeatherData>
+    fun fetchWeatherForecast(coordinates: Coordinates): Flow<WeatherData>
 }

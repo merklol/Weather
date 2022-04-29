@@ -1,6 +1,7 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.maximapps.maxim_weather.R
 import com.maximapps.maxim_weather.common.MutableSingleEventFlow
 import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
@@ -10,11 +11,13 @@ import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinate
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FETCH_FORECAST_BY_NAME
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -25,7 +28,6 @@ class MainViewModel @Inject constructor(
     private val fetchForecastByCoordinates: FetchForecastByCoordinates
 ) : ViewModel() {
     private var isFirstLaunch = true
-    private val disposables = CompositeDisposable()
 
     private val _screenTitle = MutableStateFlow("")
     val screenTitle = _screenTitle.asStateFlow()
@@ -42,6 +44,12 @@ class MainViewModel @Inject constructor(
     private val _rationaleDialogVisibility = MutableSingleEventFlow<Unit>()
     val rationaleDialogVisibility = _rationaleDialogVisibility.asSharedFlow()
 
+    fun fetchForecast(cityName: String) {
+        if (isFirstLaunch) {
+            fetchNewForecast(cityName)
+            isFirstLaunch = false
+        }
+    }
 
     fun fetchNewForecastByLocation(isGranted: Boolean) {
         if (!isGranted) {
@@ -49,25 +57,18 @@ class MainViewModel @Inject constructor(
             return
         }
         fetchForecastByCoordinates()
-            .doOnSubscribe { _loaderVisibility.value = true }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onSuccess, ::onError)
-            .also { disposables.add(it) }
+            .onStart { _loaderVisibility.value = true }
+            .onEach(::onSuccess)
+            .catch { onError() }
+            .launchIn(viewModelScope)
     }
 
     fun fetchNewForecast(cityName: String) {
         fetchForecastByName(FetchForecastByNameImpl.Params(cityName))
-            .doOnSubscribe { _loaderVisibility.value = true }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onSuccess, ::onError)
-            .also { disposables.add(it) }
-    }
-
-    fun fetchForecast(cityName: String) {
-        if (isFirstLaunch) {
-            fetchNewForecast(cityName)
-            isFirstLaunch = false
-        }
+            .onStart { _loaderVisibility.value = true }
+            .onEach(::onSuccess)
+            .catch { onError() }
+            .launchIn(viewModelScope)
     }
 
     private fun onSuccess(data: WeatherData) {
@@ -76,16 +77,10 @@ class MainViewModel @Inject constructor(
         _weatherData.value = data.detailedForecast
     }
 
-    @Suppress("unused_parameter")
-    private fun onError(throwable: Throwable) {
+    private fun onError() {
         _screenTitle.value = ""
         _weatherData.value = emptyList()
         _loaderVisibility.value = false
         _errorMessage.tryEmit(R.string.error_message)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
     }
 }

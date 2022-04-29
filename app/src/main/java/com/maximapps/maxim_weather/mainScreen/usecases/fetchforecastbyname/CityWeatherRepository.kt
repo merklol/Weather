@@ -1,7 +1,7 @@
 package com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname
 
 import com.maximapps.maxim_weather.mainScreen.usecases.common.WeatherData
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Interface defining a method for fetching weather forecast data with 3-hour step.
@@ -12,5 +12,5 @@ interface CityWeatherRepository {
     /**
      * Fetch weather forecast data with 3-hour step
      */
-    fun fetchWeatherForecast(cityName: String): Single<WeatherData>
+    fun fetchWeatherForecast(cityName: String): Flow<WeatherData>
 }
