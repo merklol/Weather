@@ -16,7 +16,7 @@ class MainDialogFragment : DialogFragment(R.layout.fragment_dialog_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.Theme_Maxim_weather_Dialog)
+        setStyle(STYLE_NO_TITLE, R.style.Theme_Weather_Dialog)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

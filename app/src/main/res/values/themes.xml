@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Maxim_weather" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Weather" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
@@ -17,18 +17,18 @@
         <item name="android:fontFamily">@font/manrope</item>
     </style>
 
-    <style name="Theme.Maxim_weather.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <style name="Theme.Weather.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@drawable/dialog_window_background</item>
     </style>
 
-    <style name="Theme.Maxim_weather.PrimaryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="Theme.Weather.PrimaryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:background">@drawable/btn_primary</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
         <item name="backgroundTint">@null</item>
     </style>
 
-    <style name="Theme.Maxim_weather.SecondaryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="Theme.Weather.SecondaryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:background">@drawable/btn_secondary</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
@@ -36,7 +36,7 @@
         <item name="backgroundTint">@null</item>
     </style>
 
-    <style name="Theme.Maxim_weather.TextInputLayout.SearchBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="Theme.Weather.TextInputLayout.SearchBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusBottomEnd">12dp</item>
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusTopEnd">12dp</item>
@@ -50,7 +50,7 @@
         <item name="startIconTint">@color/shuttle_grey_500</item>
     </style>
 
-    <style name="ThemeOverlay.Theme.Maxim_weather.TextInputLayoutAppearance" parent="">
+    <style name="ThemeOverlay.Theme.Weather.TextInputLayoutAppearance" parent="">
         <item name="colorPrimary">@color/blue_700</item>
     </style>
 </resources>
