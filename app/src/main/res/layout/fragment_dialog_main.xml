@@ -9,10 +9,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchBox"
-        style="@style/Theme.Maxim_weather.TextInputLayout.SearchBox"
+        style="@style/Theme.Weather.TextInputLayout.SearchBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.Theme.Maxim_weather.TextInputLayoutAppearance"
+        android:theme="@style/ThemeOverlay.Theme.Weather.TextInputLayoutAppearance"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelBtn"
-        style="@style/Theme.Maxim_weather.SecondaryButton"
+        style="@style/Theme.Weather.SecondaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -47,7 +47,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addBtn"
-        style="@style/Theme.Maxim_weather.PrimaryButton"
+        style="@style/Theme.Weather.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

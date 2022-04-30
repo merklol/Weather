@@ -11,7 +11,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.maximapps.maxim_weather"
+        applicationId = "com.maximapps.weather"
         minSdk = 23
         targetSdk = 32
         versionCode = 1
