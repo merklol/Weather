@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
 }
@@ -84,11 +85,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
-    //Dagger
-    implementation("com.google.dagger:dagger:2.40.5")
-    implementation("com.google.dagger:dagger-android-support:2.40.5")
-    kapt("com.google.dagger:dagger-compiler:2.40.5")
-    kapt("com.google.dagger:dagger-android-processor:2.40.5")
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.41")
+    kapt("com.google.dagger:hilt-android-compiler:2.41")
 
     //Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")

@@ -11,6 +11,7 @@ import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinate
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FETCH_FORECAST_BY_NAME
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByName
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Named
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     @Named(FETCH_FORECAST_BY_NAME)
     private val fetchForecastByName: FetchForecastByName,

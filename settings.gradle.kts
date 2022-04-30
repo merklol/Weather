@@ -1,4 +1,12 @@
 pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "dagger.hilt.android.plugin")
+                with("com.google.dagger:hilt-android-gradle-plugin") {
+                    useModule("$this:${requested.version}")
+                }
+        }
+    }
     repositories {
         gradlePluginPortal()
         google()
