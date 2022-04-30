@@ -1,10 +1,7 @@
 package com.maximapps.maxim_weather.mainScreen.di
 
-import androidx.lifecycle.ViewModel
-import com.maximapps.maxim_weather.common.di.factory.ViewModelKey
 import com.maximapps.maxim_weather.mainScreen.repositories.location.LocationRepositoryImpl
 import com.maximapps.maxim_weather.mainScreen.repositories.weather.WeatherRepository
-import com.maximapps.maxim_weather.mainScreen.ui.MainViewModel
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FETCH_FORECAST_BY_COORDINATES
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinates
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbycoordinates.FetchForecastByCoordinatesImpl
@@ -16,17 +13,15 @@ import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.Fetch
 import com.maximapps.maxim_weather.mainScreen.usecases.fetchforecastbyname.FetchForecastByNameImpl
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class, FragmentModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 @Suppress("unused")
 interface MainModule {
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
 
     @Binds
     @Singleton

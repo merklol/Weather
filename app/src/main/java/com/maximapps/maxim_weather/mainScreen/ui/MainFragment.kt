@@ -1,7 +1,6 @@
 package com.maximapps.maxim_weather.mainScreen.ui
 
 import android.Manifest.permission
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.maximapps.maxim_weather.R
-import com.maximapps.maxim_weather.common.di.factory.ViewModelFactory
 import com.maximapps.maxim_weather.common.utils.observe
 import com.maximapps.maxim_weather.databinding.FragmentMainBinding
 import com.maximapps.maxim_weather.mainScreen.usecases.common.DetailedForecast
@@ -23,14 +21,11 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
-    @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val viewModel: MainViewModel by activityViewModels { factory }
+    private val viewModel: MainViewModel by activityViewModels()
     private val binding by viewBinding(FragmentMainBinding::bind)
     private val adapter = ItemAdapter<GenericItem>()
     private val fastAdapter: GenericFastAdapter = FastAdapter.with(adapter)
@@ -39,11 +34,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             viewModel.fetchNewForecastByLocation(isGranted)
         }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
 
     override fun onStart() {
         super.onStart()
